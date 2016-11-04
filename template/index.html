@@ -1,0 +1,267 @@
+<html>
+    <head>
+        <title>restore.solutions template</title>
+        
+        <style>
+            body {
+                padding:0;
+                margin:0;
+                font-family: 'Roboto', sans-serif!important;
+            }
+            
+            .main-container {
+                background: rgba(250,250,250,1);
+            }
+            
+            .header {
+                height: 72px;
+                max-width: 1006px; 
+                margin: 0 auto;
+                color: rgb(51,51,51);
+            }
+            
+            .logo {
+                height:36px;
+                padding: 0 0 0 34px;
+                font-size:28px;
+                font-weight:600;
+                background: url(interface/usb.png) 0 6px/28px 28px no-repeat;
+                margin-top:16px;
+                float:left;
+            }
+            
+            .menu {
+                float:right;
+                margin:24px 0 0 12px;
+            }
+            
+            .menu ul {
+                padding:0;   
+            }
+            
+            .menu ul li {
+                list-style:none;
+                display:inline;
+                padding:12px;
+            }
+            
+            .menu ul li a {
+                color: rgb(51,51,51);
+                text-decoration: none;
+                font-weight:600;
+            }
+            
+            .menu ul li a:hover,
+            .menu ul li a:visited { 
+                color: rgb(51,51,51);
+            }
+            
+            .menu img {
+                height:24px;
+                width:24px;
+            }
+            
+            .basket-summary {
+                background:rgba(180,180,180,1);
+                border-radius: 4px;
+                padding:6px;
+                float:right;
+                position:relative;
+                height:40px;
+                margin-top:16px;
+                color:rgba(51,51,51,1);
+                font-weight:600;
+                overflow:hidden;
+            }
+            
+            .basket-summary div {
+                float:left;
+            }
+            
+            .basket-summary .image {
+                margin-right:24px;
+                width:24px;
+            }
+            
+            .basket-summary .text {
+                padding-top:5px;
+                margin-right:24px;
+            }
+            
+            .basket-summary img {
+                height:100%;   
+            }
+            
+            .search-form-container {
+                background: url(interface/bg-banner-small.jpg);
+                width: 100%;
+                height: 290px;
+                position:relative;
+                padding-top:50px;
+            }
+            
+            .search-form {
+                background: rgba(0,0,0,0.6);
+                border-radius: 6px;
+                max-width:1006px;
+                height:200px;
+                margin: 0 auto;
+                padding-top:45px;
+            }
+            
+            .search-form .title {
+                color:#EEE;
+                font-size:32px;
+                letter-spacing: 2px;
+                margin-bottom:12px;
+            }
+            
+            .search-form .search-form-inner {
+                margin: 0 auto;
+                display:block;
+                max-width:600px;
+                text-align:center;
+            }
+            
+            .search-form input {
+                border-radius: 4px;
+                height:60px;
+                padding:12px;
+                font-size:24px;
+                color:#AAA;
+            }
+            
+            .search-form button {   
+                height:60px;
+                font-weight:600;
+            }
+            
+            .articles-container {
+                width:1006px;
+                margin:12px auto;
+                overflow:hidden;
+            }
+            
+            .articles-container .article {
+                width: 33%;
+                padding:12px;
+                float:left;
+            }
+            
+            .articles-container img {
+                width:100%;   
+            }
+            
+            .footer {
+                height:200px;
+                background: rgba(230,230,230,1);
+                border-top: 2px solid rgba(210,210,210,1);
+            }
+            
+            .footer-inner { 
+                width: 1006px;
+                margin:0 auto;
+            }
+            
+            .footer ul {
+                display:block;
+                padding:12px 0 0 0;
+                float:left;
+            }
+            
+            .footer ul li {
+                list-style:none;
+                display:inline;
+                padding: 12px;
+            }
+            
+            .footer ul li a,
+            .footer ul li a:hover,
+            .footer ul li a:visited  {
+                font-size:18px;
+                color: rgba(150,150,150,1);
+                text-decoration: none;
+            }
+            
+            .footer .ecommerce {    
+                float:right;
+                padding:12px;
+            }
+        </style>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+    </head>
+    
+    <body>
+        <div class="main-container">
+            <div class="header">
+                <div class="logo">
+                    restore solutions
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#"><img src="interface/facebook.png" /></a></li>
+                        <li><a href="#"><img src="interface/twitter.png" /></a></li>
+                        <li><a href="#"><img src="interface/googleplus.png" /></a></li>
+                    </ul>
+                </div>
+                <div class="basket-summary">
+                    <div class="image"><img src="interface/shopping_cart.png" /></div>
+                    <div class="text">1 item</div>
+                </div>
+            </div>
+            <div class="search-form-container">
+                <div class="search-form">
+                    <div class="search-form-inner">
+                        <div class="title">Search For Your Laptop</div>
+                        <form>
+                            <div class="input-group">
+                              <input type="text" class="form-control" placeholder="e.g: Acer Aspire 5560">
+                              <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Find Your Drivers</button>
+                              </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>    
+            </div>
+            <div class="articles-container">
+                <div class="article article-first">
+                    <img src="interface/dvd.png" />
+                    <span class="text-content">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut nunc nisl. Duis scelerisque efficitur malesuada. Sed posuere lobortis metus ac sodales. In lobortis nulla nisi, eu lacinia risus volutpat in. Mauris hendrerit in dui in vulputate. In ultricies mauris nisl, id congue lorem egestas blandit. Vestibulum id elit ultricies, sollicitudin felis non, dapibus justo.
+                    </span>
+                </div>
+                <div class="article">
+                    <img src="interface/search.png" />
+                    <span class="text-content">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut nunc nisl. Duis scelerisque efficitur malesuada. Sed posuere lobortis metus ac sodales. In lobortis nulla nisi, eu lacinia risus volutpat in. Mauris hendrerit in dui in vulputate. In ultricies mauris nisl, id congue lorem egestas blandit. Vestibulum id elit ultricies, sollicitudin felis non, dapibus justo.
+                    </span>
+                </div>
+                <div class="article article-last">
+                    <img src="interface/testing.png" />
+                    <span class="text-content">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut nunc nisl. Duis scelerisque efficitur malesuada. Sed posuere lobortis metus ac sodales. In lobortis nulla nisi, eu lacinia risus volutpat in. Mauris hendrerit in dui in vulputate. In ultricies mauris nisl, id congue lorem egestas blandit. Vestibulum id elit ultricies, sollicitudin felis non, dapibus justo.
+                    </span>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="footer-inner">
+                    <ul>
+                        <li><a href="#">Terms &amp; Conditions</a></li>
+                        <li><a href="#">Privacy Statement</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Site Map</a></li>
+                    </ul>
+                    <div class="ecommerce">
+                        <img src="interface/sage-pay.png" />
+                        <img src="interface/geotrust.png" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
