@@ -34,12 +34,12 @@ describe('SearchForm', function(){
         
     it('opens "make" dropdown when clicked', function(){
         component.find('#openMake').simulate('click');
-        expect(component.find('#makeList')).to.not.have.className('hidden');
+        expect(component.find('#makeList')).to.have.style('display','block');
     })
     
     it('closes all other dropdowns when "make" it clicked', function(){
         component.find('#openMake').simulate('click');
-        expect(component.find('#modelList')).to.have.className('hidden');
-        expect(component.find('#windowsList')).to.have.className('hidden');
+        expect(component.find('#modelList')).to.have.style('display','none');
+        expect(component.find('#windowsList')).to.have.style('display','none');
     })
 })
