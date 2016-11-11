@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
     mocha = require('gulp-mocha'),
     webpack = require('gulp-webpack'),
+    webpackConfig = require('./webpack.config'),
     uglify = require('gulp-uglify'),
     sass = require('gulp-sass'),
     concat = require('gulp-concat'),
@@ -14,12 +15,12 @@ gulp.task('test', function () {
         .pipe(mocha({ reporter: 'spec', timeout: 20000, compilers: { js: babel } }));
 });
 
-gulp.task('bundle', ['bundle-css']);
+gulp.task('bundle', ['bundle-css','bundle-js']);
 
 gulp.task('bundle-js', function () {
     gulp
-        .src('app/main.jsx')
-        .pipe(webpack(require('./webpack.config.js')))
+        .src('client/index.jsx')
+        .pipe(webpack(webpackConfig('index')))
         .pipe(uglify())
         .pipe(gulp.dest('static/'));
 });

@@ -3,73 +3,11 @@
         <title>Driver Disk Store</title>
         
         <%- include('partials/style') %>
-        
-        <script type="text/javascript">
-            function initialise(){
-                Array.prototype.forEach.call(document.getElementsByClassName('dropdown-toggle'), function(element){
-                    element.onclick = function(e){
-                        var displayOptions = {
-                            'block': 'none',
-                            'none': 'block'
-                        };
-                        var listDisplay = e.target.nextElementSibling.style.display;
-                        e.target.nextElementSibling.style.display = (listDisplay) ? displayOptions[listDisplay] : 'block';
-                    }
-                });
-            };
-            
-            window.onload = initialise;
-        </script>
     </head>
     
     <body>
         <%- include('partials/header') %>
-        <div class="search-form-container">
-            <div class="search-form  inner-container">
-                <div class="search-form-inner">
-                    <div class="title">Specify Your PC and OS Version</div>
-                    <form>
-                        <div class="dropdown search-element">
-                          <button class="btn btn-default dropdown-toggle" type="button">
-                            Make
-                            <span class="caret"></span>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a href="#">Acer</a></li>
-                            <li><a href="#">Dell</a></li>
-                            <li><a href="#">Lenovo</a></li>
-                          </ul>
-                        </div>
-                        <div class="dropdown search-element">
-                          <button class="btn btn-default dropdown-toggle" type="button">
-                            Model
-                            <span class="caret"></span>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a href="#">Aspire 5570</a></li>
-                            <li><a href="#">Aspire 5560</a></li>
-                            <li><a href="#">Aspire 5550</a></li>
-                          </ul>
-                        </div>
-                        <div class="dropdown search-element">
-                          <button class="btn btn-default dropdown-toggle" type="button">
-                            Windows
-                            <span class="caret"></span>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a href="#">Vista</a></li>
-                            <li><a href="#">7</a></li>
-                            <li><a href="#">8</a></li>
-                            <li><a href="#">10</a></li>
-                          </ul>
-                        </div>
-                        <div class="search-element">
-                            <button class="btn btn-default submit-button">Find Your Drivers</button>
-                        </div>
-                    </form>
-                </div>
-            </div>    
-        </div>
+        <div id="searchFormContainer" class="search-form-container"><%- searchForm %></div>
         <div class="articles-container inner-container">
             <div class="article">
                 <img src="interface/dvd.png" />
@@ -91,5 +29,23 @@
             </div>
         </div>
         <%- include('partials/footer') %>
+        
+        <script type="text/javascript">
+            function initialise(){
+                Array.prototype.forEach.call(document.getElementsByClassName('dropdown-toggle'), function(element){
+                    element.onclick = function(e){
+                        var displayOptions = {
+                            'block': 'none',
+                            'none': 'block'
+                        };
+                        var listDisplay = e.target.nextElementSibling.style.display;
+                        e.target.nextElementSibling.style.display = (listDisplay) ? displayOptions[listDisplay] : 'block';
+                    }
+                });
+            };
+            
+            window.onload = initialise;
+        </script>
+        <script src="index.min.js"></script>
     </body>
 </html>
