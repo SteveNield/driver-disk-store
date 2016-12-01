@@ -10,42 +10,25 @@
         <div id="searchFormContainer" class="search-form-container"><%- searchForm %></div>
         <div class="articles-container inner-container">
             <div class="article">
-                <img src="interface/dvd.png" />
+                <img src="/interface/dvd.png" />
                 <span class="text-content">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut nunc nisl. Duis scelerisque efficitur malesuada. Sed posuere lobortis metus ac sodales. In lobortis nulla nisi, eu lacinia risus volutpat in. Mauris hendrerit in dui in vulputate. In ultricies mauris nisl, id congue lorem egestas blandit. Vestibulum id elit ultricies, sollicitudin felis non, dapibus justo.
                 </span>
             </div>
             <div class="article">
-                <img src="interface/search.png" />
+                <img src="/interface/search.png" />
                 <span class="text-content">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut nunc nisl. Duis scelerisque efficitur malesuada. Sed posuere lobortis metus ac sodales. In lobortis nulla nisi, eu lacinia risus volutpat in. Mauris hendrerit in dui in vulputate. In ultricies mauris nisl, id congue lorem egestas blandit. Vestibulum id elit ultricies, sollicitudin felis non, dapibus justo.
                 </span>
             </div>
             <div class="article article-last">
-                <img src="interface/testing.png" />
+                <img src="/interface/testing.png" />
                 <span class="text-content">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut nunc nisl. Duis scelerisque efficitur malesuada. Sed posuere lobortis metus ac sodales. In lobortis nulla nisi, eu lacinia risus volutpat in. Mauris hendrerit in dui in vulputate. In ultricies mauris nisl, id congue lorem egestas blandit. Vestibulum id elit ultricies, sollicitudin felis non, dapibus justo.
                 </span>
             </div>
         </div>
         <%- include('partials/footer') %>
-        
-        <script type="text/javascript">
-            function initialise(){
-                Array.prototype.forEach.call(document.getElementsByClassName('dropdown-toggle'), function(element){
-                    element.onclick = function(e){
-                        var displayOptions = {
-                            'block': 'none',
-                            'none': 'block'
-                        };
-                        var listDisplay = e.target.nextElementSibling.style.display;
-                        e.target.nextElementSibling.style.display = (listDisplay) ? displayOptions[listDisplay] : 'block';
-                    }
-                });
-            };
-            
-            window.onload = initialise;
-        </script>
-        <script src="index.min.js"></script>
+        <script src="/index.min.js"></script>
     </body>
 </html>

@@ -6,12 +6,16 @@
     "start": "node server"
   },
   "dependencies": {
+    "applicationinsights": "^0.16.0",
     "ejs": "^2.5.2",
     "express": "^4.13.4",
+    "fs": "0.0.2",
+    "moment": "^2.16.0",
     "node-jsx": "^0.13.3",
     "path": "^0.12.7",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "superagent": "^2.3.0"
   },
   "noAnalyze": true,
   "license": "Apache",
@@ -25,6 +29,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
     "chai-enzyme": "^0.6.0",
     "cheerio": "^0.22.0",
     "enzyme": "^2.6.0",
@@ -40,6 +45,7 @@
     "mocha-jsdom": "^1.1.0",
     "react-addons-test-utils": "^15.3.2",
     "sinon": "^1.17.6",
+    "sinon-as-promised": "^4.0.2",
     "sinon-chai": "^2.8.0",
     "supertest": "^2.0.1",
     "webpack": "^1.13.3"

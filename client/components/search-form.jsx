@@ -1,64 +1,78 @@
-var React = require('react');
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    DropDown = require('./drop-down.jsx'),
+    laptopStore = require('./../stores/laptop-store'),
+    eventHub = require('./../event-hub'),
+    browser = require('./../browser');
 
 module.exports = React.createClass({
     getInitialState: function(){
-        return {
-            openDropDown: ''
-        };
+        return laptopStore.getState();
     },
-    openMake: function(){
-        this.setState({openDropDown: 'make'});
+    componentDidMount: function(){
+        var component = this;
+        laptopStore.subscribe(function(state){
+            component.setState(state); 
+        });
     },
-    openModel: function(){
-        this.setState({openDropDown: 'model'});  
+    selectMake: function(event){
+        event.preventDefault();
+        var make = event.target.value;
+        this.setState({ 
+            selectedMake: make, 
+            makeIsValid: true 
+        });
+        eventHub.raise('make-selected', make);
     },
-    openWindows: function(){
-        this.setState({openDropDown: 'windows'});  
+    selectModel: function(event){
+        event.preventDefault();
+        this.setState({ 
+            selectedModel: event.target.value, 
+            modelIsValid: true 
+        });
+    },
+    selectOperatingSystem: function(event){
+        event.preventDefault();  
+        this.setState({ 
+            selectedOperatingSystem: event.target.value, 
+            operatingSystemIsValid: true 
+        });
+    },
+    isFormValid: function(){
+        if (this.state.selectedMake !== undefined &&
+            this.state.selectedModel !== undefined &&
+            this.state.selectedOperatingSystem !== undefined){
+            return true;
+        } else {
+            return false;
+        }
+    },
+    submit: function(event){
+        event.preventDefault();
+        var make = this.state.selectedMake,
+            model = this.state.selectedModel,
+            operatingSystem = this.state.selectedOperatingSystem;
+        
+        if (this.isFormValid()){
+            browser.redirect('/products/'+make+'/'+model+'/'+operatingSystem);
+        }
     },
     render: function(){
+        var component = this;
         return (<div className="search-form inner-container">
                     <div className="search-form-inner">
                         <div className="title">Specify Your PC and OS Version</div>
                         <form>
-                            <div className="dropdown search-element">
-                              <button id="openMake" className="btn btn-default dropdown-toggle" type="button" onClick={this.openMake}>
-                                Make
-                                <span className="caret"></span>
-                              </button>
-                              <ul id="makeList" className="dropdown-menu" style={{ display:(this.state.openDropDown==='make'?'block':'none') }}>
-                                <li><a href="#">Acer</a></li>
-                                <li><a href="#">Dell</a></li>
-                                <li><a href="#">Lenovo</a></li>
-                              </ul>
-                            </div>
-                            <div className="dropdown search-element">
-                              <button id="openModel" className="btn btn-default dropdown-toggle" type="button" onClick={this.openModel}>
-                                Model
-                                <span className="caret"></span>
-                              </button>
-                              <ul id="modelList" className="dropdown-menu" style={{ display:(this.state.openDropDown==='model'?'block':'none') }}>
-                                <li><a href="#">Aspire 5570</a></li>
-                                <li><a href="#">Aspire 5560</a></li>
-                                <li><a href="#">Aspire 5550</a></li>
-                              </ul>
-                            </div>
-                            <div className="dropdown search-element">
-                              <button id="openWindows" className="btn btn-default dropdown-toggle" type="button" onClick={this.openWindows}>
-                                Windows
-                                <span className="caret"></span>
-                              </button>
-                              <ul id="windowsList" className="dropdown-menu" style={{ display:(this.state.openDropDown==='windows'?'block':'none') }}>
-                                <li><a href="#">Vista</a></li>
-                                <li><a href="#">7</a></li>
-                                <li><a href="#">8</a></li>
-                                <li><a href="#">10</a></li>
-                              </ul>
-                            </div>
+                            <DropDown label="Make" items={this.state.makes} changed={this.selectMake} valid={this.state.makeIsValid} />
+                            <DropDown label="Model" items={this.state.models} changed={this.selectModel} valid={this.state.modelIsValid} emptyMessage="Please Select a Make" />
+                            <DropDown label="OS" items={this.state.operatingSystems} changed={this.selectOperatingSystem} valid={this.state.operatingSystemIsValid} />
                             <div className="search-element">
-                                <button className="btn btn-default submit-button">Find Your Drivers</button>
+                                <button className="btn btn-default submit-button" onClick={this.submit}>
+                                    Find Your Drivers
+                                </button>
                             </div>
                         </form>
                     </div>
-                </div>);   
+                </div>);
     }
 });
