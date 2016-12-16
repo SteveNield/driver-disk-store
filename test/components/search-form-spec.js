@@ -22,7 +22,10 @@ describe('SearchForm', function(){
 
     var component,
         sandbox,
-        laptopStoreSubscribe
+        laptopStoreSubscribe,
+        makes,
+        models,
+        operatingSystems;
 
     beforeEach(function(){
         jsdom({skipWindowCheck: true});
@@ -33,6 +36,18 @@ describe('SearchForm', function(){
 
         sandbox
             .stub(eventHub, 'raise');
+
+        makes = [{id: '123', name: 'hello'}];
+        models = [{id: '3211', name: 'version 1'}],
+        operatingSystems = [{id: '12312', name: 'windows 1'}];
+
+        sandbox
+            .stub(laptopStore, 'getState')
+            .returns({
+                makes: makes,
+                models: models,
+                operatingSystems: operatingSystems
+            });
     })
 
     afterEach(function(){
@@ -55,18 +70,6 @@ describe('SearchForm', function(){
         });
 
         it('sets the initial state from laptopStore', function(){
-            var makes = [{id: '123', name: 'hello'}],
-                models = [{id: '3211', name: 'version 1'}],
-                operatingSystems = [{id: '12312', name: 'windows 1'}];
-
-            sandbox
-                .stub(laptopStore, 'getState')
-                .returns({
-                    makes: makes,
-                    models: models,
-                    operatingSystems: operatingSystems
-                });
-
             component = enzyme.mount(<SearchForm />);
             expect(component.state('makes')).to.equal(makes);
             expect(component.state('models')).to.equal(models);
