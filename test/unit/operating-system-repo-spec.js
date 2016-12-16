@@ -1,5 +1,5 @@
 var operatingSystemRepo = require('./../../server/repositories/operating-system-repo'),
-    driverApiClient = require('./../../server/data/driver-api-client'),
+    database = require('./../../server/data/database'),
     sinon = require('sinon'),
     chai = require('chai'),
     sinonAsPromised = require('sinon-as-promised'),
@@ -12,41 +12,30 @@ describe('operating-system-repo', function(){
     it('exists', function(){
         operatingSystemRepo.should.exist;
     });
-    
+
     var sandbox;
-    
+
     beforeEach(function(){
-        sandbox = sinon.collection; 
+        sandbox = sinon.collection;
     });
-    
+
     afterEach(function(){
-        sandbox.restore(); 
+        sandbox.restore();
     });
-    
+
     describe('get', function(){
         it('exists', function(){
-            operatingSystemRepo.get.should.exist; 
+            operatingSystemRepo.get.should.exist;
         });
-        
-        it('gets all operating systems from driver-api-client', function(){
+
+        it('gets all operating systems from database', function(){
             var operatingSystems = [{ id: '123' },{ id: '345' }];
-            
+
             sandbox
-                .stub(driverApiClient, 'get')
-                .withArgs('/operatingsystems')
+                .stub(database, 'getOperatingSystems')
                 .resolves(operatingSystems);
-            
+
             return operatingSystemRepo.get().should.eventually.equal(operatingSystems);
         });
-        
-        it('rejects with error if driver-api-client call fails', function(){
-            var error = { status: 404, error: 'FAIL' };
-            
-            sandbox 
-                .stub(driverApiClient, 'get')
-                .rejects(error);
-            
-            return operatingSystemRepo.get().should.eventually.be.rejectedWith(error)
-        })
     });
 });

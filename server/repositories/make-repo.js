@@ -1,11 +1,11 @@
-var driverApiClient = require('./../data/driver-api-client');
+var database = require('./../data/database');
 
 module.exports.get = function(){
     return new Promise(function(resolve,reject){
-        driverApiClient.get('/makes').then(function(makes){
+        database.getMakes().then(function(makes){
             resolve(makes);
         }, function(err){
             reject(err);
-        }) 
+        })
     });
 }

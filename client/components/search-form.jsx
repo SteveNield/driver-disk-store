@@ -12,30 +12,30 @@ module.exports = React.createClass({
     componentDidMount: function(){
         var component = this;
         laptopStore.subscribe(function(state){
-            component.setState(state); 
+            component.setState(state);
         });
     },
     selectMake: function(event){
         event.preventDefault();
         var make = event.target.value;
-        this.setState({ 
-            selectedMake: make, 
-            makeIsValid: true 
+        this.setState({
+            selectedMake: make,
+            makeIsValid: true
         });
         eventHub.raise('make-selected', make);
     },
     selectModel: function(event){
         event.preventDefault();
-        this.setState({ 
-            selectedModel: event.target.value, 
-            modelIsValid: true 
+        this.setState({
+            selectedModel: event.target.value,
+            modelIsValid: true
         });
     },
     selectOperatingSystem: function(event){
-        event.preventDefault();  
-        this.setState({ 
-            selectedOperatingSystem: event.target.value, 
-            operatingSystemIsValid: true 
+        event.preventDefault();
+        this.setState({
+            selectedOperatingSystem: event.target.value,
+            operatingSystemIsValid: true
         });
     },
     isFormValid: function(){
@@ -52,9 +52,9 @@ module.exports = React.createClass({
         var make = this.state.selectedMake,
             model = this.state.selectedModel,
             operatingSystem = this.state.selectedOperatingSystem;
-        
+
         if (this.isFormValid()){
-            browser.redirect('/products/'+make+'/'+model+'/'+operatingSystem);
+            browser.redirect('/product/'+make+'/'+model+'/'+operatingSystem);
         }
     },
     render: function(){

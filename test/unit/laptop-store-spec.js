@@ -9,14 +9,14 @@ var laptopStore = require('./../../client/stores/laptop-store'),
 var should = chai.should();
 
 describe('laptop-store', function(){
-    
+
     it('exists', function(){
-        laptopStore.should.exist; 
+        laptopStore.should.exist;
     });
-    
+
     describe('subscription mechanism', function(){
-        var sandbox, 
-            handler, 
+        var sandbox,
+            handler,
             httpClientGet,
             makeId = '12345';
 
@@ -34,24 +34,24 @@ describe('laptop-store', function(){
         });
 
         afterEach(function(){
-            sandbox.restore(); 
+            sandbox.restore();
             laptopStore.reinitialiseState();
         });
-        
+
         it('gets models from httpClient when "make-change" event is raised on the event-hub', function(){
             laptopStore.load();
 
             handler(makeId);
 
-            httpClientGet.should.have.been.calledWith('/makes/'+makeId+'/models');
+            httpClientGet.should.have.been.calledWith('/api/makes/'+makeId+'/models');
         });
     });
-    
+
     describe('getState', function(){
         it('exists', function(){
             laptopStore.getState.should.exist;
         });
-        
+
         it('returns the correct initial state', function(){
             laptopStore.getState().should.deep.equal({
                 makes: [],
@@ -60,42 +60,42 @@ describe('laptop-store', function(){
             });
         });
     });
-    
+
     describe('load', function(){
-        
+
         var sandbox;
-        
+
         beforeEach(function(){
-            sandbox = sinon.collection; 
+            sandbox = sinon.collection;
             sandbox.stub(eventHub, 'on');
         });
-        
+
         afterEach(function(){
-            sandbox.restore(); 
+            sandbox.restore();
         });
-        
+
         it('exists', function(){
-            laptopStore.load.should.exist; 
+            laptopStore.load.should.exist;
         });
-        
+
         it('gets makes from httpClient', function(){
             var stub = sandbox
                 .stub(httpClient, 'get')
                 .resolves();
-            
+
             laptopStore.load();
-            
-            stub.should.have.been.calledWith('/makes');
+
+            stub.should.have.been.calledWith('/api/makes');
         });
-        
+
         it('gets operating systems from httpClient', function(){
             var stub = sandbox
                 .stub(httpClient, 'get')
                 .resolves();
-            
+
             laptopStore.load();
-            
-            stub.should.have.been.calledWith('/operatingsystems');
+
+            stub.should.have.been.calledWith('/api/operatingsystems');
         });
     });
 });

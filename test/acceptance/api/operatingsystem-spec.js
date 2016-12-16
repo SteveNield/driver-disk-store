@@ -1,57 +1,55 @@
 var supertest = require('supertest'),
     chai = require('chai'),
     sinonAsPromised = require('sinon-as-promised'),
-    driverApiClient = require('./../../server/data/driver-api-client'),
+    database = require('./../../../server/data/database'),
     sinon = require('sinon');
 
 var should = chai.should();
 
-describe('/makes', function(){
-    
+describe('/operatingsystems', function(){
+
     var server, request, sandbox, mock = [
-        { id:"123", name:"acer" },
-        { id:"123", name:"acer" },
-        { id:"123", name:"acer" }];
-    
+        { id:"123", name:"Windows 7" },
+        { id:"123", name:"Windows 8" },
+        { id:"123", name:"Windows 10" }];
+
     beforeEach(function(){
-        server = require('./../../server');
+        server = require('./../../../server');
         request = supertest(server);
         sandbox = sinon.collection;
     });
-    
+
     afterEach(function(){
         sandbox.restore();
-        server.close(); 
+        server.close();
     });
-    
+
     it('returns 200', function(done){
         sandbox
-            .stub(driverApiClient, 'get')
-            .withArgs('/makes')
-            .resolves();
-        
+            .stub(database, 'getOperatingSystems')
+            .resolves(mock);
+
         try{
             request
-                .get('/makes')
+                .get('/api/operatingsystems')
                 .expect(200, done);
         } catch(err) {
-            done(err);   
+            done(err);
         }
     });
-    
-    it('returns makes from driver API', function(done){
+
+    it('returns opreating systems from driver API', function(done){
         sandbox
-            .stub(driverApiClient, 'get')
-            .withArgs('/makes')
+            .stub(database, 'getOperatingSystems')
             .resolves(mock);
-        
+
         try{
             request
-                .get('/makes')
+                .get('/api/operatingsystems')
                 .end(function(err,res){
                     if(err)
                         done(err);
-                    
+
                     JSON.parse(res.text).should.deep.equal(mock);
                     done();
                 });
@@ -59,20 +57,19 @@ describe('/makes', function(){
             done(err);
         }
     });
-    
+
     it('returns 500 if driver API call fails', function(done){
         sandbox
-            .stub(driverApiClient, 'get')
-            .withArgs('/makes')
+            .stub(database, 'getOperatingSystems')
             .rejects('FAILURE');
-        
+
         try{
             request
-                .get('/makes')
+                .get('/api/operatingsystems')
                 .expect(500, done);
         } catch(err) {
             done(err);
         }
     });
-    
+
 });

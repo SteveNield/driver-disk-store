@@ -19,41 +19,41 @@ var expect = chai.expect;
 chai.use(sinonChai);
 
 describe('SearchForm', function(){
-    
-    var component, 
+
+    var component,
         sandbox,
         laptopStoreSubscribe
-    
+
     beforeEach(function(){
         jsdom({skipWindowCheck: true});
         sandbox = sinon.collection;
-        
+
         laptopStoreSubscribe = sandbox
             .stub(laptopStore, 'subscribe');
-        
+
         sandbox
             .stub(eventHub, 'raise');
     })
-    
+
     afterEach(function(){
         sandbox.restore();
     })
-    
+
     it('exists', function(){
         expect(SearchForm).to.exist;
     })
-    
+
     it('renders', function(){
         component = enzyme.shallow(<SearchForm />);
         expect(component).to.exist;
     })
-    
+
     describe('after mounting', function(){
         it('subscribes to laptopStore', function(){
             component = enzyme.mount(<SearchForm />);
             expect(laptopStoreSubscribe).to.have.been.called;
         });
-        
+
         it('sets the initial state from laptopStore', function(){
             var makes = [{id: '123', name: 'hello'}],
                 models = [{id: '3211', name: 'version 1'}],
@@ -73,7 +73,7 @@ describe('SearchForm', function(){
             expect(component.state('operatingSystems')).to.equal(operatingSystems);
         });
     })
-    
+
     describe('when form is submitted', function(){
         describe('but no make is selected', function(){
             it('does not post form', function(){
@@ -88,7 +88,7 @@ describe('SearchForm', function(){
                 expect(stub).to.not.have.been.called;
             });
         })
-        
+
         describe('but no model is selected', function(){
             it('does not post form', function(){
                 var stub = sandbox.stub(browser, 'redirect');
@@ -102,7 +102,7 @@ describe('SearchForm', function(){
                 expect(stub).to.not.have.been.called;
             })
         })
-        
+
         describe('but no operating system is selected', function(){
             it('does not post form', function(){
                 var stub = sandbox.stub(browser, 'redirect');
@@ -116,7 +116,7 @@ describe('SearchForm', function(){
                 expect(stub).to.not.have.been.called;
             })
         })
-        
+
         describe('and all values are selected', function(){
             it('redirects browser with correct uri', function(){
                 var stub = sandbox.stub(browser, 'redirect');
@@ -129,7 +129,7 @@ describe('SearchForm', function(){
                 component.update();
                 console.log(component.state('selectedMake'));
                 component.find('.submit-button').simulate('click');
-                expect(stub).to.have.been.calledWith('/products/make/model/os');
+                expect(stub).to.have.been.calledWith('/product/make/model/os');
             })
         })
     })

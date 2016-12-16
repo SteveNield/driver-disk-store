@@ -12,7 +12,7 @@ var gulp = require('gulp'),
 gulp.task('test', function () {
     return gulp
         .src(['./test/**/*-spec.js'], { read: false })
-        .pipe(mocha({ reporter: 'spec', timeout: 20000, compilers: { js: babel } }));
+        .pipe(mocha({ reporter: 'spec', timeout: 1500, compilers: { js: babel } }));
 });
 
 gulp.task('bundle', ['bundle-css','bundle-js']);
@@ -23,6 +23,11 @@ gulp.task('bundle-js', function () {
         .pipe(webpack(webpackConfig('index')))
         .pipe(uglify())
         .pipe(gulp.dest('static/'));
+    gulp
+      .src('client/product.jsx')
+      .pipe(webpack(webpackConfig('product')))
+      .pipe(uglify())
+      .pipe(gulp.dest('static/'))
 });
 
 gulp.task('bundle-css', function () {

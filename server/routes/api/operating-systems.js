@@ -1,10 +1,10 @@
 var express = require('express'),
-    operatingSystemRepo = require('./../repositories/operating-system-repo'),
-    loggr = require('./../../lib/loggr');
+    operatingSystemRepo = require('./../../repositories/operating-system-repo'),
+    loggr = require('./../../../lib/loggr');
 
 module.exports = function(app){
     var router = express.Router();
-    
+
     router.get('/', function(req,res){
         operatingSystemRepo.get().then(function(operatingSystems){
             res.json(operatingSystems);
@@ -13,6 +13,6 @@ module.exports = function(app){
             res.status(500).send();
         });
     });
-    
-    app.use('/operatingsystems', router);
+
+    app.use('/api/operatingsystems', router);
 }

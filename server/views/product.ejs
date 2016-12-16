@@ -1,47 +1,14 @@
 <html>
     <head>
-        <title><%- product.description %> - Driver Disk Store</title>
-        
+        <title><%- components.product.model.description %> - Driver Disk Store</title>
+
         <%- include('partials/style') %>
     </head>
-    
+
     <body>
-        <%- include('partials/header') %>
-        <div class="body-container inner-container">
-            <div class="product-row">
-                <div class="product-title"><h1><%- product.description %></h1></div>
-                <div class="product-price"><%- product.displayPrice %></div>
-            </div>
-            <div class="product-row">
-                <div class="product-image"><img src="/interface/download.png" /></div>
-                <div class="product-options detail-panel">
-                    <h2>Options:</h2>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked />
-                        DVD ROM
-                      </label>
-                    </div>
-                    <div class="radio disabled">
-                      <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" />
-                        USB Flash Drive
-                      </label>
-                    </div>
-                    <span class="delivery-notice">
-                        <img src="/interface/delivery-van.svg" />
-                        Standard delivery time 2 working days to Mainland UK
-                    </span>
-                </div>
-                <div class="add-to-basket">
-                    <button class="btn btn-default submit-button">Add to Basket</button>
-                </div>
-            </div>
-            <div class="product-description detail-panel"><h2>Description</h2>
-                <p><%- product.longDescription %></p>
-            </div>
-        </div>
+        <div id="headerContainer"><%- components.header.html %></div>
+        <div id="productContainer"><%- components.product.html %></div>
         <%- include('partials/footer') %>
-        <script src="/index.min.js"></script>
+        <script src="/product.min.js"></script>
     </body>
 </html>
