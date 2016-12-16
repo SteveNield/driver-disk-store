@@ -1,22 +1,42 @@
-var React = require('react');
+var React = require('react'),
+    currencyFormatter = require('./../../lib/currency-formatter');
 
 module.exports = React.createClass({
+  getInitialState: function(){
+    return {
+      selectedOption: this.props.product.options[0]
+    }
+  },
+  changeSelectedOption: function(event){
+    var newOption = this.props.product.options.find(function(option){
+      return option.id === event.target.value;
+    });
+
+    this.setState({selectedOption: newOption});
+  },
   render: function(){
+    var component = this;
     return (<div>
               <div className="body-container inner-container">
                   <div className="product-row">
                       <div className="product-title"><h1>{this.props.product.description}</h1></div>
-                      <div className="product-price">{this.props.product.displayPrice}</div>
+                      <div className="product-price">{currencyFormatter.format('GBP', this.state.selectedOption.price)}</div>
                   </div>
                   <div className="product-row">
-                      <div className="product-image"><img src={"/interface/"+this.props.product.options[0].image} /></div>
+                      <div className="product-image"><img src={"/interface/"+this.state.selectedOption.image} /></div>
                       <div className="product-options detail-panel">
                           <h2>Options:</h2>
                           {
                             this.props.product.options.map(function(option, index){
                               return (<div className="radio" key={index}>
                                 <label>
-                                  <input type="radio" name="options" id={"options"+option.name} value={option.name} defaultChecked={(index === 0)} />
+                                  <input
+                                    type="radio"
+                                    name="options"
+                                    id={"options"+option.name}
+                                    onClick={component.changeSelectedOption}
+                                    value={option.id}
+                                    defaultChecked={(option.id === component.state.selectedOption.id)} />
                                     {option.name}{(option.delivered) ? " (Delivered)" : ""}
                                   </label>
                               </div>);
@@ -31,8 +51,10 @@ module.exports = React.createClass({
                           <button className="btn btn-default submit-button">Add to Basket</button>
                       </div>
                   </div>
-                  <div className="product-description detail-panel"><h2>Description</h2>
-                      <p>{this.props.product.longDescription}</p>
+                  <div className="detail-panel">
+                    <h2>Description</h2>
+                    <p className="option-description">{this.state.selectedOption.description}</p>
+                    <p className="product-description">{this.props.product.longDescription}</p>
                   </div>
               </div>
               <div className="articles-container inner-container">

@@ -20,8 +20,6 @@ module.exports.get = function(make, model, operatingSystem){
             if(!product){
                 reject(new Err('Specified product does not exist'));
             }
-
-            product.displayPrice = currencyFormatter.format('GBP', product.price);
             resolve(product);
         }, function(err){
             reject(err);

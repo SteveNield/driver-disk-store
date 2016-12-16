@@ -43,22 +43,6 @@ describe('product-repo', function(){
 
                     return productRepo.get('123', '456', '789').should.eventually.equal(product);
                 });
-                it('sets the display price', function(){
-                    var product = { id: '123', price: 9.99 },
-                        expectedProduct = { id: '123', price: 9.99, displayPrice: '£9.99' };
-
-                    sandbox
-                        .stub(database, 'getProduct')
-                        .withArgs('123','456','789')
-                        .resolves(product);
-
-                    sandbox
-                        .stub(currencyFormatter, 'format')
-                        .withArgs('GBP', 9.99)
-                        .returns('£9.99');
-
-                    return productRepo.get('123','456','789').should.eventually.deep.equal(expectedProduct);
-                });
             })
 
             describe('arguments are invalid', function(){
