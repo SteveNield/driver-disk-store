@@ -2,11 +2,13 @@
   "options": [{
     "id": "123",
     "name": "DVD ROM",
-    "delivered": true
+    "delivered": true,
+    "image": "dvdrom.png"
   }, {
     "id": "456",
     "name": "USB Flash Drive",
-    "delivered": false
+    "delivered": false,
+    "image": "flash-drive.png"
   }],
   "products": [{
       "id": "181",

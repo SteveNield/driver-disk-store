@@ -4,4 +4,4 @@ var React = require('react'),
     Product = require('./components/product.jsx');
 
 ReactDom.render(<Header />, headerContainer);
-ReactDom.render(<Product />, productContainer);
+ReactDom.render(<Product product={window.globals.product} />, productContainer);

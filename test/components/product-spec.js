@@ -20,7 +20,7 @@ describe('Product component', function(){
     description: "test-description",
     displayPrice: "£13213654654.99",
     longDescription: "Long and boring description",
-    options: [{name: ''},{name: ''}]
+    options: [{name: 'great product', image: 'buythis.png'},{name: 'better product'}]
   };
 
   beforeEach(function(){
@@ -32,7 +32,7 @@ describe('Product component', function(){
   })
 
   function renderComponent(){
-    return enzyme.shallow(<Product product={mock} />);
+    return enzyme.render(<Product product={mock} />);
   }
 
   it('displays product description', function(){
@@ -53,5 +53,10 @@ describe('Product component', function(){
   it('displays an option for each option', function(){
     var component = renderComponent();
     expect(component.find('.product-options .radio').length).to.equal(mock.options.length);
+  })
+
+  it('displays the correct image for the first option', function(){
+    var component = renderComponent();
+    expect(component.find('.product-image img').prop('src')).to.equal('/interface/'+mock.options[0].image)
   })
 })

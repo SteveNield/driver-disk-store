@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title><%- components.product.model.description %> - Driver Disk Store</title>
@@ -9,6 +10,10 @@
         <div id="headerContainer"><%- components.header.html %></div>
         <div id="productContainer"><%- components.product.html %></div>
         <%- include('partials/footer') %>
+        <script>
+          window.globals = {};
+          window.globals.product = <%- JSON.stringify(components.product.model) %>;
+        </script>
         <script src="/product.min.js"></script>
     </body>
 </html>

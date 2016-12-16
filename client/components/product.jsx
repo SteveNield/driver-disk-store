@@ -9,14 +9,14 @@ module.exports = React.createClass({
                       <div className="product-price">{this.props.product.displayPrice}</div>
                   </div>
                   <div className="product-row">
-                      <div className="product-image"><img src="/interface/download.png" /></div>
+                      <div className="product-image"><img src={"/interface/"+this.props.product.options[0].image} /></div>
                       <div className="product-options detail-panel">
                           <h2>Options:</h2>
                           {
                             this.props.product.options.map(function(option, index){
                               return (<div className="radio" key={index}>
                                 <label>
-                                  <input type="radio" name="options" id={"options"+option.name} value={option.name} defaultChecked />
+                                  <input type="radio" name="options" id={"options"+option.name} value={option.name} defaultChecked={(index === 0)} />
                                     {option.name}{(option.delivered) ? " (Delivered)" : ""}
                                   </label>
                               </div>);
