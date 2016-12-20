@@ -1,6 +1,7 @@
 require('./../dom-mock')('<html><body></body></html>');
 
 var Product = require('./../../client/components/product.jsx'),
+    eventHub = require('./../../client/event-hub'),
     enzyme = require('enzyme'),
     chai = require('chai'),
     chaiEnzyme = require('chai-enzyme'),
@@ -16,7 +17,10 @@ chai.use(sinonChai);
 
 describe('Product component', function(){
 
-  var mock = {
+  var sandbox;
+
+  const mock = {
+    id: "098098",
     description: "test-description",
     longDescription: "Long and boring description",
     options: [{
@@ -36,6 +40,11 @@ describe('Product component', function(){
 
   beforeEach(function(){
       jsdom({skipWindowCheck: true});
+      sandbox = sinon.collection;
+  })
+
+  afterEach(function(){
+    sandbox.restore();
   })
 
   it('exists', function(){
@@ -104,6 +113,22 @@ describe('Product component', function(){
 
     it('displays the description for the new selectedOption', function(){
       expect(component.find('.option-description').text()).to.equal(mock.options[1].description)
+    })
+  })
+
+  describe('when addToBasket is clicked', function(){
+    it('raises add-to-basket event on eventHub', function(){
+      var stub = sandbox
+        .stub(eventHub, 'raise');
+
+      var component = renderComponent();
+
+      component.find('.add-to-basket button').simulate('click');
+
+      expect(stub).to.have.been.calledWith('add-to-basket', {
+        product: mock.id,
+        option: component.state().selectedOption.id
+      })
     })
   })
 })

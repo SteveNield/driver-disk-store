@@ -1,4 +1,5 @@
 var React = require('react'),
+    eventHub = require('./../event-hub'),
     currencyFormatter = require('./../../lib/currency-formatter');
 
 module.exports = React.createClass({
@@ -13,6 +14,12 @@ module.exports = React.createClass({
     });
 
     this.setState({selectedOption: newOption});
+  },
+  addToBasket: function(){
+    eventHub.raise('add-to-basket', {
+      product: this.props.product.id,
+      option: this.state.selectedOption.id
+    })
   },
   render: function(){
     var component = this;
@@ -48,7 +55,7 @@ module.exports = React.createClass({
                           </span>
                       </div>
                       <div className="add-to-basket">
-                          <button className="btn btn-default submit-button">Add to Basket</button>
+                          <button className="btn btn-default submit-button" onClick={this.addToBasket}>Add to Basket</button>
                       </div>
                   </div>
                   <div className="detail-panel">

@@ -12,7 +12,7 @@ var gulp = require('gulp'),
 gulp.task('test', function () {
     return gulp
         .src(['./test/**/*-spec.js'], { read: false })
-        .pipe(mocha({ reporter: 'spec', timeout: 1500, compilers: { js: babel } }));
+        .pipe(mocha({ reporter: 'spec', timeout: 2000, compilers: { js: babel } }));
 });
 
 gulp.task('bundle', ['bundle-css','bundle-js']);

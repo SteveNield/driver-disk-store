@@ -39,3 +39,25 @@ module.exports.getModels = function(makeId){
 module.exports.getOperatingSystems = function(){
   return Promise.resolve(data.operatingSystems);
 }
+
+module.exports.saveBasket = function(basket){
+  return new Promise(function(resolve, reject){
+    data.baskets[basket.id] = basket;
+    console.log(JSON.stringify(data.baskets));
+    resolve();
+  });
+}
+
+module.exports.getBasket = function(id){
+  return new Promise(function(resolve, reject){
+    var basket = data.baskets[id];
+    if(!basket){
+      reject({
+        status: 400,
+        message: 'Basket not found'
+      })
+    } else {
+      resolve(basket);
+    }
+  })
+}
