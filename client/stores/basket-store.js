@@ -1,98 +1,49 @@
-var eventHub = require('./../event-hub'),
-    httpClient = require('./../../lib/http-client'),
-    cookieJar = require('./../cookie-jar'),
-    uuid = require('uuid'),
-    config = require('./../api.conf');
+var Dispatcher = require('./../dispatcher'),
+    EventEmitter = require('events').EventEmitter,
+    Events = require('../event-registry/cart'),
+    _ = require('underscore');
 
-var state = {},
-    changeListeners = [];
-
-function publishUpdate(){
-    changeListeners.map(function(listener){
-        listener(state);
-    });
+var state = {
+  skus: {}
 }
 
-module.exports.subscribe = function(callback){
-    changeListeners.push(callback);
-}
-
-module.exports.getState = function(){
-    return state;
-}
-
-module.exports.initialiseState = constructState;
-
-module.exports.load = function(){
-  eventHub.on('add-to-basket', addToBasket);
-  return loadClientBasket();
-}
-
-function publishUpdate(){
-  var store = this;
-  changeListeners.map(function(listener){
-    console.log('New Basket Published: ', store.state.basket);
-    listener(state);
-  });
-}
-
-function addToBasket(sku){
-  setCookieIfNew();
-  persistBasketItem(sku).then(function(basket){
-    state.basket = basket;
-    publishUpdate();
-  });
-}
-
-function loadClientBasket(){
-  return new Promise(function(resolve, reject){
-    var basketId = readClientBasketId();
-    if(!basketId){
-      constructState();
-      resolve(state);
-    } else {
-      httpClient.get(config.api.host+'/api/basket/'+basketId).then(function(basket){
-        state.basket = basket;
-        resolve(state);
-      }, function(err){
-        if(err.status === 400){
-          cookieJar.remove('basket');
-          constructState();
-          resolve(state);
-        } else {
-          reject(err);
-        }
-      });
-    }
-  });
-}
-
-function persistBasketItem(sku){
-  return new Promise(function(resolve, reject){
-    httpClient.put(
-      config.api.host+'/api/basket/'+state.basket.id+'/items', {
-        sku: sku
-      }).then(function(basket){
-        resolve(basket);
-      }, reject)
-    });
-}
-
-function constructState(){
-  state = {
-    basket: {
-      id: uuid.v1(),
-      items: []
-    }
-  };
-}
-
-function setCookieIfNew(){
-  if (readClientBasketId() === undefined){
-    cookieJar.add('basket', state.basket.id, { expires: Infinity });
+function add(sku){
+  // add item to remote cart
+  // get new cart
+  // set local state
+  // emit change
+  var skuId = sku.product+sku.option;
+  if (skuId in state.skus){
+    state.skus[skuId].quantity+=1;
+  } else {
+    sku.quantity = 1;
+    state.skus[skuId] = sku;
   }
 }
 
-function readClientBasketId(){
-  return cookieJar.get('basket');
-}
+var cartStore = _.extend({}, EventEmitter.prototype, {
+  emitChange: function(){
+    this.emit('change')
+  },
+  addChangeListener: function(cb){
+    this.on('change', cb);
+  },
+  getBasket: function(){
+    return state;
+  }
+});
+
+Dispatcher.register(function(payload){
+  var action = payload.action;
+  var text;
+  switch(action.actionType){
+    case Events.CART_ADD:
+      add(action.sku);
+      break;
+    default: return true;
+  }
+  cartStore.emitChange();
+  return true;
+})
+
+module.exports = cartStore;

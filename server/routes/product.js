@@ -3,7 +3,7 @@ var express = require('express'),
     ReactDom = require('react-dom/server'),
     loggr = require('./../../lib/loggr'),
     productRepository = require('./../repositories/product-repo'),
-    Product = require('./../../client/components/product.jsx'),
+    ProductApp = require('./../../client/components/product-app.jsx'),
     Header = require('./../../client/components/header.jsx');
 
 module.exports = function(app){
@@ -20,17 +20,7 @@ module.exports = function(app){
         } else {
           try{
             res.render('product.ejs', {
-                components: {
-                  product: {
-                    html: ReactDom.renderToStaticMarkup(React.createFactory(Product)({
-                      product: product
-                    })),
-                    model: product
-                  },
-                  header: {
-                    html: ReactDom.renderToStaticMarkup(React.createFactory(Header)({}))
-                  }
-                }
+                product
             });
           } catch(err) {
             loggr.error(err);
