@@ -1,0 +1,38 @@
+var productApi = require('./../../client/api/product-api'),
+    cartActions = require('./../../client/actions/cart'),
+    browser = require('./../../client/browser')
+    chai = require('chai'),
+    sinon = require('sinon');
+
+var should = chai.should();
+
+describe('product-api', function(){
+  var sandbox;
+
+  beforeEach(function(){
+    sandbox = sinon.collection;
+  })
+
+  afterEach(function(){
+    sandbox.restore();
+  })
+
+  it('exists', function(){
+    productApi.should.exist;
+  })
+  describe('loadProductData', function(){
+    it('raises receiveProduct action with product from global scope', function(){
+      var product = { id: 23 },
+          receiveProduct = sandbox
+            .stub(cartActions, 'receiveProduct');
+
+      sandbox
+        .stub(browser, 'globals')
+        .returns({ product: product });
+
+      productApi.loadProductData();
+
+      receiveProduct.should.have.been.calledWith(product);
+    })
+  })
+})

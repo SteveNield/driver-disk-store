@@ -7,15 +7,19 @@ module.exports = function(app){
 
     router.get('/:id', function(req,res){
       basketRepo.get(req.params.id).then(function(basket){
-        res.json(basket);
+        if(!basket){
+          res.status(400).send('Basket not found');
+        } else {
+          res.json(basket);
+        }
       }, function(err){
-        res.status(err.status).send(err);
+        res.status(500).send(err);
       })
     });
 
     router.put('/:id/items', function(req,res){
-      basketRepo.addItem(req.params.id, req.body.sku).then(function(basket){
-        res.json(basket);
+      basketRepo.addSku(req.params.id, req.body.sku).then(function(){
+        res.send();
       }, function(err){
         res.status(err.status).send(err);
       });

@@ -1,24 +1,36 @@
 var Dispatcher = require('./../dispatcher'),
     EventEmitter = require('events').EventEmitter,
-    Events = require('../event-registry/cart'),
+    Events = require('./../event-registry/cart'),
+    basketApi = require('./../api/basket-api'),
+    cookieJar = require('./../cookie-jar'),
+    uuid = require('uuid'),
+    loggr = require('./../../lib/loggr'),
     _ = require('underscore');
 
-var state = {
-  skus: {}
+var state = {}
+
+function loadBasketData(basket){
+  state = basket;
+  loggr.info('Basket changed: '+JSON.stringify(state));
+  cartStore.emitChange();
 }
 
 function add(sku){
-  // add item to remote cart
-  // get new cart
-  // set local state
-  // emit change
-  var skuId = sku.product+sku.option;
-  if (skuId in state.skus){
-    state.skus[skuId].quantity+=1;
-  } else {
-    sku.quantity = 1;
-    state.skus[skuId] = sku;
+  function getOrSetBasketId(){
+    var basketId = cookieJar.get('basket');
+    if(!basketId){
+      basketId = uuid.v1();
+      cookieJar.add('basket', basketId);
+    }
+    return basketId;
   }
+
+  var basketId = getOrSetBasketId();
+  basketApi.addSku(basketId, sku).then(function(){
+    basketApi.loadBasketData();
+  }, function(err){
+    loggr.error('Error adding item to basket')
+  })
 }
 
 var cartStore = _.extend({}, EventEmitter.prototype, {
@@ -40,9 +52,11 @@ Dispatcher.register(function(payload){
     case Events.CART_ADD:
       add(action.sku);
       break;
+    case Events.RECEIVE_BASKET:
+      loadBasketData(action.data);
+      break;
     default: return true;
   }
-  cartStore.emitChange();
   return true;
 })
 

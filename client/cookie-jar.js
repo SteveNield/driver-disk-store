@@ -1,7 +1,7 @@
 var cookies = require('cookies-js');
 
-module.exports.add = function(key, value, options){
-  cookies.set(key, value, options);
+module.exports.add = function(key, value){
+  cookies.set(key, value, { expires: Infinity });
 }
 
 module.exports.get = function(key){

@@ -1,7 +1,9 @@
 require('./../dom-mock')('<html><body></body></html>');
 
 var Product = require('./../../client/components/product.jsx'),
-    eventHub = require('./../../client/event-hub'),
+    ProductOption = require('./../../client/components/product-option.jsx'),
+    CartActions = require('./../../client/actions/cart'),
+    currencyFormatter = require('./../../lib/currency-formatter'),
     enzyme = require('enzyme'),
     chai = require('chai'),
     chaiEnzyme = require('chai-enzyme'),
@@ -15,120 +17,93 @@ chai.use(chaiEnzyme());
 var expect = chai.expect;
 chai.use(sinonChai);
 
-describe('Product component', function(){
+describe('Product', function(){
 
-  var sandbox;
-
-  const mock = {
-    id: "098098",
-    description: "test-description",
-    longDescription: "Long and boring description",
-    options: [{
-      id: '123',
-      name: 'great product',
-      image: 'buythis.png',
-      price: 91.99,
-      description: 'this option is the best!'
-    },{
-      id: '456',
-      name: 'better product',
-      image: 'better.png',
-      price: 88.99,
-      description: 'this option is better than the best'
-    }]
-  };
-
-  beforeEach(function(){
-      jsdom({skipWindowCheck: true});
-      sandbox = sinon.collection;
-  })
-
-  afterEach(function(){
-    sandbox.restore();
-  })
-
-  it('exists', function(){
-    expect(Product).to.exist;
-  })
-
-  function renderComponent(){
-    return enzyme.mount(<Product product={mock} />);
-  }
-
-  it('sets the selectedOption as the first option on mount', function(){
-    var component = renderComponent();
-    expect(component.state().selectedOption).to.equal(mock.options[0]);
-  })
-
-  it('displays product description', function(){
-    var component = renderComponent();
-    expect(component.find('.product-title').text()).to.equal(mock.description);
-  })
-
-  it('formats and displays the selectedOption price', function(){
-    var component = renderComponent();
-    expect(component.find('.product-price').text()).to.equal('£91.99');
-  })
-
-  it('display product long description', function(){
-    var component = renderComponent();
-    expect(component.find('.product-description').text()).to.equal(mock.longDescription);
-  })
-
-  it('displays the selectedOption description', function(){
-    var component = renderComponent();
-    expect(component.find('.option-description').text()).to.equal(mock.options[0].description)
-  })
-
-  it('displays an option for each option', function(){
-    var component = renderComponent();
-    expect(component.find('.product-options .radio').length).to.equal(mock.options.length);
-  })
-
-  it('displays the correct image for the selectedOption', function(){
-    var component = renderComponent();
-    expect(component.find('.product-image img').prop('src')).to.equal('/interface/'+mock.options[0].image)
-  })
-
-  describe('when a new option is clicked', function(){
-
-    var component;
+    var component,
+        sandbox,
+        stubs,
+        product,
+        selected;
 
     beforeEach(function(){
-      component = renderComponent();
-      component.find('.product-options .radio input[value="'+mock.options[1].id+'"]').simulate('click');
+        jsdom({skipWindowCheck: true});
+        sandbox = sinon.collection;
+        stubs = stubDependencies();
+
+        product = {
+          options: [{
+            price: 1.11
+          }]
+        };
+
+        selected = product.options[0];
     })
 
-    it('sets the selectedOption to be the new option', function(){
-      expect(component.state().selectedOption).to.equal(mock.options[1]);
+    afterEach(function(){
+      sandbox.restore();
     })
 
-    it('displays the new selectedOption price', function(){
-      expect(component.find('.product-price').text()).to.equal('£88.99');
+    function shallowRenderComponent(){
+      component = enzyme.shallow(<Product product={product} selected={selected} />);
+    }
+
+    function mountComponent(){
+      component = enzyme.mount(<Product product={product} selected={selected} />);
+    }
+
+    function stubDependencies(){
+      var stubs = {
+        currencyFormatter: {},
+        cartActions: {}
+      };
+
+      stubs.cartActions.addToCart = sandbox
+        .stub(CartActions, 'addToCart');
+
+      stubs.cartActions.selectOption = sandbox
+        .stub(CartActions, 'selectOption');
+
+      stubs.currencyFormatter.format = sandbox
+        .stub(currencyFormatter, 'format');
+
+      return stubs;
+    }
+
+    it('exists', function(){
+      expect(Product).to.exist;
     })
-
-    it('displays the new selectedOption image', function(){
-      expect(component.find('.product-image img').prop('src')).to.equal('/interface/'+mock.options[1].image)
+    it('renders', function(){
+      shallowRenderComponent();
+      expect(component).to.exist;
     })
-
-    it('displays the description for the new selectedOption', function(){
-      expect(component.find('.option-description').text()).to.equal(mock.options[1].description)
+    it('shows product description', function(){
+      product.description = 'merry christmas';
+      shallowRenderComponent();
+      expect(component.find('.product-title').text()).to.equal(product.description);
     })
-  })
-
-  describe('when addToBasket is clicked', function(){
-    it('raises add-to-basket event on eventHub', function(){
-      var stub = sandbox
-        .stub(eventHub, 'raise');
-
-      var component = renderComponent();
-
-      component.find('.add-to-basket button').simulate('click');
-
-      expect(stub).to.have.been.calledWith('add-to-basket', {
-        product: mock.id,
-        option: component.state().selectedOption.id
-      })
+    it('shows selected option price', function(){
+      stubs.currencyFormatter.format.returns('£1.11');
+      shallowRenderComponent();
+      expect(component.find('.product-price').text()).to.equal('£1.11');
     })
-  })
-})
+    it('shows selected option image', function(){
+      selected.image = 'image.jpg';
+      shallowRenderComponent();
+      expect(component.find('.product-image img').prop('src')).to.equal('/interface/'+selected.image);
+    })
+    it('renders a ProductOption for each product option', function(){
+      product.options = [{ id: '123' }, { id: '4556' }, { id: '789' }];
+      shallowRenderComponent();
+      expect(component.find(ProductOption).length).to.equal(3);
+    })
+    it('shows product long description', function(){
+      product.longDescription = 'This is a very long and boring description of a product';
+      shallowRenderComponent();
+      expect(component.find('.product-description').text()).to.equal(product.longDescription);
+    })
+    it('shows selected option description', function(){
+      selected.description = 'The better option';
+      shallowRenderComponent();
+      expect(component.find('.option-description').text()).to.equal(selected.description);
+    })
+});

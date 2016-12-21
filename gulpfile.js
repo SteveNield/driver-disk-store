@@ -10,9 +10,20 @@ var gulp = require('gulp'),
     babel = require('babel-register');
 
 gulp.task('test', function () {
-    return gulp
-        .src(['./test/**/*-spec.js'], { read: false })
-        .pipe(mocha({ reporter: 'spec', timeout: 2000, compilers: { js: babel } }));
+  return gulp
+    .src([
+      './test/acceptance/*-spec.js',
+      './test/components/*-spec.js',
+      './test/unit/*-spec.js'],
+      {
+        read: false })
+    .pipe(mocha({
+      reporter: 'spec',
+      timeout: 2000,
+      compilers: {
+        js: babel
+      }
+    }));
 });
 
 gulp.task('bundle', ['bundle-css','bundle-js']);

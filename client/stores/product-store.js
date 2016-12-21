@@ -3,7 +3,10 @@ var Dispatcher = require('./../dispatcher'),
     Events = require('./../event-registry/cart'),
     _ = require('underscore');
 
-var product = {}, selected = null;
+var product = {
+      options: []
+    },
+    selected = {};
 
 function loadProductData(data){
   product = data;

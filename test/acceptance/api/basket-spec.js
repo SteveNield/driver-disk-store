@@ -42,10 +42,10 @@ describe('/api/basket', function(){
         });
       });
       describe('/items', function(){
-        describe('get', function(){
+        describe('put', function(){
           it('returns correct basket', function(done){
             var stub = sandbox
-              .stub(basketRepo, 'addItem')
+              .stub(basketRepo, 'addSku')
               .resolves();
 
             var sku = {

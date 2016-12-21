@@ -8,6 +8,12 @@ var cartActions = {
       data: data
     })
   },
+  receiveBasket: function(basket){
+    Dispatcher.handleAction({
+      actionType: Events.RECEIVE_BASKET,
+      data: basket
+    })
+  },
   selectOption: function(index){
     Dispatcher.handleAction({
       actionType: Events.SELECT_OPTION,

@@ -1,38 +1,44 @@
-var database = require('./../data/database');
+var database = require('./../data/database')
+    Basket = require('./../models/Basket'),
+    BasketItem = require('./../models/BasketItem');
 
 module.exports.get = function(id){
   return database.getBasket(id);
 }
 
-module.exports.addItem = function(basketId, sku){
+module.exports.addSku = function(basketId, sku){
   return new Promise(function(resolve, reject){
-    database.getBasket(basketId).then(function(basket){
-      addSkuToBasket(basket, sku);
-      database.saveBasket(basket).then(function(){
-        resolve(basket);
+    getOrCreateBasket(basketId)
+      .then(function(basket){
+        try{
+          addSkuToBasket(basket, sku);
+        } catch(err){
+          reject(err);
+        }
+        database.saveBasket(basket).then(function(){
+          resolve(basket);
+        }, reject);
       }, reject);
-    }, reject);
   });
 }
 
-function findBasketItemForSku(basket, sku){
-  return basket.items.find(function(item){
-    return (item.sku.product === sku.product && item.sku.option === sku.option);
+function getOrCreateBasket(basketId){
+  return new Promise(function(resolve, reject){
+    database.getBasket(basketId).then(function(basket){
+      if(!basket){
+        database.saveBasket(new Basket(basketId)).then(resolve, reject);
+      } else {
+        resolve(basket);
+      }
+    }, reject)
   })
 }
 
 function addSkuToBasket(basket, sku){
-  var existingItem = findBasketItemForSku(basket, sku);
-  if (existingItem){
-    existingItem.quantity += 1;
+  var basketItemId = sku.product+sku.option;
+  if(basketItemId in basket.items){
+    basket.items[basketItemId].quantity += 1;
   } else {
-    basket.items.push(constructBasketItem(sku));
-  }
-}
-
-function constructBasketItem(sku){
-  return {
-    quantity: 1,
-    sku: sku
+    basket.items[basketItemId] = new BasketItem(basketItemId, sku.product, sku.option);
   }
 }

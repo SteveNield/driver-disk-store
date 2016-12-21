@@ -1,31 +1,25 @@
-var basketRepository = require('./../../server/repositories/basket-repo'),
+var basketRepo = require('./../../server/repositories/basket-repo'),
     database = require('./../../server/data/database'),
-    chai = require('chai'),
-    chaiAsPromised = require('chai-as-promised'),
-    sinon = require('sinon');
+    Basket = require('./../../server/models/Basket'),
+    sinon = require('sinon'),
+    sinonAsPromised = require('sinon-as-promised'),
+    chai = require('chai');
 
 var should = chai.should();
-chai.use(chaiAsPromised);
 
-describe('basketRepository', function(){
+describe('basket-repo', function(){
   it('exists', function(){
-    basketRepository.should.exist;
+    basketRepo.should.exist;
   })
 
-  var basket, basketItem, sandbox;
+  var sandbox, basket, sku;
 
   beforeEach(function(){
     sandbox = sinon.collection;
-    basket = {
-      id: '123',
-      items: []
-    };
-    basketItem = {
-      sku: {
-        product: '123',
-        option: '456'
-      },
-      quantity: 1
+    basket = {};
+    sku = {
+      product: '111',
+      option: '222'
     };
   })
 
@@ -33,73 +27,77 @@ describe('basketRepository', function(){
     sandbox.restore();
   })
 
-  describe('addItem', function(){
-    it('exists', function(){
-      basketRepository.addItem.should.exist;
-    })
-    describe('when instance of sku is already in basket', function(){
-      it('updates quantity', function(done){
-        basket.items.push(basketItem);
-
-        sandbox
-          .stub(database, 'getBasket')
-          .withArgs('123')
-          .resolves(basket);
-
-        sandbox
-          .stub(database, 'saveBasket')
-          .resolves();
-
-        basketRepository.addItem('123', basketItem.sku).then(function(){
-          try{
-            basket.items[0].quantity.should.equal(2);
-            done();
-          } catch(err){
-            done(err);
-          }
-        });
-      })
-    })
-    describe('when instance of sku is not already in basket', function(){
-      it('creates a new basket item and adds to basket', function(){
-        basket.items = [];
-
-        sandbox
-          .stub(database, 'getBasket')
-          .withArgs('123')
-          .resolves(basket);
-
-        sandbox
-          .stub(database, 'saveBasket')
-          .resolves();
-
-        basketRepository.addItem('123', basketItem.sku).then(function(){
-          try{
-            basket.items[0].should.deep.equal(basketItem);
-            done();
-          } catch(err){
-            done(err);
-          }
-        })
-      })
-    })
-  })
-
   describe('get', function(){
-    it('exists', function(){
-      basketRepository.get.should.exist;
-    })
-    it('gets the basket from the database', function(){
-      var basket = {
-        id: '123'
-      }
-
-      var stub = sandbox
+    it('retrieves the basket from the database', function(){
+      sandbox
         .stub(database, 'getBasket')
         .withArgs('123')
         .resolves(basket);
 
-      basketRepository.get('123').should.eventually.equal(basket);
+      basketRepo.get('123').should.eventually.equal(basket);
+    })
+  })
+
+  describe('addSku', function(){
+    describe('when basket does not exist', function(){
+      it('creates a new basket and saves to the database', function(done){
+        var newBasket = new Basket('123');
+
+        var stub = sandbox
+          .stub(database, 'saveBasket')
+          .resolves(newBasket);
+
+        sandbox
+          .stub(database, 'getBasket')
+          .resolves();
+
+        basketRepo.addSku('123', sku).then(function(){
+          try{
+            stub.should.have.been.calledWith(newBasket);
+            done();
+          } catch(err){
+            done(err);
+          }
+        }, done)
+      })
+    })
+
+    function testBasketItemQuantity(basketItemId, basket, quantity, done){
+      sandbox
+        .stub(database, 'getBasket')
+        .resolves(basket);
+
+      var stub = sandbox
+        .stub(database, 'saveBasket')
+        .resolves(basket);
+
+      basketRepo.addSku('123', sku).then(function(basket){
+        try{
+          basket.items[basketItemId].quantity.should.equal(quantity);
+          done();
+        } catch(err){
+          done(err);
+        }
+      }, done);
+    }
+
+    describe('when instance of sku is already in basket', function(){
+      it('updates the quantity of the basket item', function(done){
+        var basket = new Basket('123'),
+            basketItemId = sku.product+sku.option;
+
+        basket.items[basketItemId] = new BasketItem(basketItemId, sku.product, sku.option);
+
+        testBasketItemQuantity(basketItemId, basket, 2, done);
+      })
+    })
+    describe('when basket does not already contain sku', function(){
+      it('adds the item and sets the quantity to 1', function(done){
+        var basket = new Basket('123'),
+            basketItemId = sku.product+sku.option;
+
+        testBasketItemQuantity(basketItemId, basket, 1, done);
+      })
     })
   })
 })
