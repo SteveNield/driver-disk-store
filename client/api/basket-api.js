@@ -6,13 +6,13 @@ var httpClient = require('./../../lib/http-client'),
 
 function addSku(basketId, sku){
   return httpClient.put(
-    config.api.host+'/api/basket/'+basketId+'/items',
+    '/api/basket/'+basketId+'/items',
     { sku: sku }
   );
 }
 
 function get(basketId){
-  return httpClient.get(config.api.host+'/api/basket/'+basketId);
+  return httpClient.get('/api/basket/'+basketId);
 }
 
 function loadBasketData(){

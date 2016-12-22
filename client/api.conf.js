@@ -1,7 +1,9 @@
+var browser = require('./browser');
+
 var config = {};
 
 config.api = {
-  host: window.location.protocal+'://'+window.location.host
+  host: ''
 }
 
 module.exports = config;

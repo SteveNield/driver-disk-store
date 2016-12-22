@@ -5,7 +5,7 @@ var httpClient = require('./../../lib/http-client'),
 module.exports.loadMakes = function(){
   return new Promise(function(resolve, reject){
     httpClient
-      .get(config.api.host+'/api/makes')
+      .get('/api/makes')
       .then(function(makes){
         ProductSearchActions.receiveMakes(makes);
         resolve();
@@ -16,7 +16,7 @@ module.exports.loadMakes = function(){
 module.exports.loadOperatingSystems = function(){
   return new Promise(function(resolve, reject){
     httpClient
-      .get(config.api.host+'/api/operatingsystems')
+      .get('/api/operatingsystems')
       .then(function(operatingSystems){
         ProductSearchActions.receiveOperatingSystems(operatingSystems);
         resolve();
@@ -27,7 +27,7 @@ module.exports.loadOperatingSystems = function(){
 module.exports.loadModels = function(makeId){
   return new Promise(function(resolve, reject){
     httpClient
-      .get(config.api.host+'/api/makes/'+makeId+'/models')
+      .get('/api/makes/'+makeId+'/models')
       .then(function(models){
         ProductSearchActions.receiveModels(models);
         resolve();
