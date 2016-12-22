@@ -1,8 +1,11 @@
 var React = require('react'),
     ReactDom = require('react-dom'),
-    SearchForm = require('./components/search-form.jsx'),
-    laptopStore = require('./stores/laptop-store');
+    HomeApp = require('./components/home-app.jsx'),
+    BasketApi = require('./api/basket-api'),
+    ProductSearchApi = require('./api/product-search-api');
 
-laptopStore.load();
+BasketApi.loadBasketData();
+ProductSearchApi.loadMakes();
+ProductSearchApi.loadOperatingSystems();
 
-ReactDom.render(<SearchForm />, searchFormContainer);
+ReactDom.render(<HomeApp />, appContainer);

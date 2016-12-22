@@ -6,79 +6,69 @@ var DropDown = require('./../../client/components/drop-down.jsx'),
     chaiEnzyme = require('chai-enzyme'),
     React = require('react'),
     ReactDom = require('react-dom'),
-    jsdom = require('mocha-jsdom'),
-    sinon = require('sinon'),
-    sinonChai = require('sinon-chai');
+    jsdom = require('mocha-jsdom');
 
 chai.use(chaiEnzyme());
 var expect = chai.expect;
-chai.use(sinonChai);
 
 describe('DropDown', function(){
-    
-    var component, 
+
+    var component,
         sandbox,
-        options;
-    
+        items,
+        label,
+        emptyMessage,
+        onChange;
+
     beforeEach(function(){
-        jsdom({skipWindowCheck: true});
-        sandbox = sinon.collection;
-        
-        options = {
-            label: 'selected_value',
-            items: [],
-            changed: sandbox.stub(),
-            emptyMessage: ''
-        };
+      jsdom({skipWindowCheck: true});
+      sandbox = sinon.collection;
+
+      items = [];
+      label = "Label",
+      emptyMessage = "We've got nothing left!";
+      onChange = sandbox.stub();
     })
-    
+
     afterEach(function(){
-        sandbox.restore();
+      sandbox.restore();
     })
-    
-    function renderComponent(){
-        component = enzyme.shallow(<DropDown defaultLabel={options.defaultLabel} label={options.label} valid={options.valid} emptyMessage={options.emptyMessage} items={options.items} buttonClicked={options.buttonClicked} itemSelected={options.itemSelected} state={options.state} />);
+
+    function shallowRenderComponent(){
+      component = enzyme.shallow(<DropDown items={items} label={label} emptyMessage={emptyMessage} onChange={onChange} />);
     }
-    
+
     it('exists', function(){
-        expect(DropDown).to.exist;
-    });
-    
+      expect(DropDown).to.exist;
+    })
     it('renders', function(){
-        renderComponent();
-        expect(component).to.exist;
-    });
-        
-    describe('when populated with at least one item of data', function(){
-        it('populates list items for each item plus one for the dropdown title', function(){
-            options.items.push({ id: '123', name: 'item-1' });
-            options.items.push({ id: '456', name: 'item-2' });
-            options.label = 'test-dropdown';
-
-            renderComponent();
-
-            expect(component.find('#test-dropdown').children()).to.have.length(3);
-        });
+      shallowRenderComponent();
+      expect(component).to.exist;
     })
-    
-    describe('when not populated', function(){
-        it('populates dropdown with an item containing empty message plus one <option> for the title', function(){
-            options.items = [];
-            options.label = 'test-dropdown';
-            
-            renderComponent();
-            
-            expect(component.find('#test-dropdown').children()).to.have.length(2);
-        })
-        
-        it('correctly displays the emptyMessage in the dropdown', function(){
-            options.items = [];
-            options.label = 'test-dropdown';
-            options.emptyMessage = 'EMPTY!';
-            
-            renderComponent();
-            
-            expect(component.find('.empty-message').text()).to.equal('EMPTY!');
-        })
+    it('renders 1 option for each item', function(){
+      items = [
+        { id: '123', name: 'red' },
+        { id: '456', name: 'green' },
+        { id: '789', name: 'blue' }
+      ];
+      shallowRenderComponent();
+      expect(component.find('option.item').length).to.equal(items.length);
     })
-})
+    it('renders 1 option to show the label', function(){
+      shallowRenderComponent();
+      expect(component.find('option').first().text()).to.equal(label);
+    })
+    describe('when items is empty', function(){
+      it('renders 1 option to show empty message', function(){
+        shallowRenderComponent();
+        expect(component.find('option.empty-message').text()).to.equal(emptyMessage);
+      })
+    })
+    describe('when item is selected', function(){
+      it('calls onChange handler', function(){
+        shallowRenderComponent();
+        component.find('select').simulate('change');
+        expect(onChange).to.have.been.called;
+      })
+    })
+});
