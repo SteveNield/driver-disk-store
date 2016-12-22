@@ -1,7 +1,7 @@
 var config = {};
 
 config.api = {
-  host: 'http://localhost:5558'
+  host: process.env.apiHost || 'http://localhost:5558'
 }
 
 module.exports = config;
