@@ -1,5 +1,5 @@
 var Dispatcher = require('./../dispatcher'),
-    Events = require('./../event-registry/cart');
+    Events = require('./../constants/cart');
 
 var cartActions = {
   receiveProduct: function(data){

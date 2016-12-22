@@ -1,6 +1,6 @@
 var httpClient = require('./../../lib/http-client'),
     cookieJar = require('./../cookie-jar'),
-    CartActions = require('./../actions/cart'),
+    CartActions = require('./../actions/cart-actions'),
     loggr = require('./../../lib/loggr'),
     config = require('./../api.conf');
 

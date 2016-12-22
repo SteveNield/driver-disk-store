@@ -1,6 +1,6 @@
 var basketApi = require('./../../client/api/basket-api'),
     httpClient = require('./../../lib/http-client'),
-    cartActions = require('./../../client/actions/cart'),
+    CartActions = require('./../../client/actions/cart-actions'),
     cookieJar = require('./../../client/cookie-jar'),
     config = require('./../../client/api.conf'),
     chai = require('chai'),
@@ -62,7 +62,7 @@ describe('basket-api', function(){
 
     function stubReceiveBasketAction(){
       return sandbox
-        .stub(cartActions, 'receiveBasket');
+        .stub(CartActions, 'receiveBasket');
     }
 
     describe('when client basket cookie does not exist', function(){

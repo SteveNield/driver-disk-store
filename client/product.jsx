@@ -7,4 +7,4 @@ var React = require('react'),
 productApi.loadProductData();
 basketApi.loadBasketData();
 
-ReactDom.render(<ProductApp />, productContainer);
+ReactDom.render(<ProductApp />, appContainer);

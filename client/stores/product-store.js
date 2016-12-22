@@ -1,6 +1,6 @@
 var Dispatcher = require('./../dispatcher'),
     EventEmitter = require('events').EventEmitter,
-    Events = require('./../event-registry/cart'),
+    CartConstants = require('./../constants/cart'),
     _ = require('underscore');
 
 var product = {
@@ -36,10 +36,10 @@ Dispatcher.register(function(payload){
   var action = payload.action;
   var text;
   switch(action.actionType){
-    case Events.RECEIVE_DATA:
+    case CartConstants.RECEIVE_DATA:
       loadProductData(action.data);
       break;
-    case Events.SELECT_OPTION:
+    case CartConstants.SELECT_OPTION:
       setSelected(action.index);
       break;
     default: return true;

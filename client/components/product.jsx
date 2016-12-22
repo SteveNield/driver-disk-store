@@ -1,6 +1,6 @@
 var React = require('react'),
     ProductOption = require('./product-option.jsx'),
-    CartActions = require('./../actions/cart'),
+    CartActions = require('./../actions/cart-actions'),
     currencyFormatter = require('./../../lib/currency-formatter');
 
 module.exports = React.createClass({

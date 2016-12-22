@@ -2,7 +2,7 @@ require('./../dom-mock')('<html><body></body></html>');
 
 var Product = require('./../../client/components/product.jsx'),
     ProductOption = require('./../../client/components/product-option.jsx'),
-    CartActions = require('./../../client/actions/cart'),
+    CartActions = require('./../../client/actions/cart-actions'),
     currencyFormatter = require('./../../lib/currency-formatter'),
     enzyme = require('enzyme'),
     chai = require('chai'),
