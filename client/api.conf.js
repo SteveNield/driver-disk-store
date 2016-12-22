@@ -1,7 +1,7 @@
 var config = {};
-console.log('Environment: '+JSON.stringify(process.env))
+
 config.api = {
-  host: process.env.apiHost || 'http://localhost:5558'
+  host: window.location.protocal+'://'+window.location.host
 }
 
 module.exports = config;
