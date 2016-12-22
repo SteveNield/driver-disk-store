@@ -2,7 +2,7 @@ var React = require('react');
 
 module.exports = React.createClass({
   render: function(){
-    return (<div className="articles-container">
+    return (<div className="articles-container inner-container">
         <div className="article">
             <img src="/interface/dvd.png" />
             <span className="text-content">

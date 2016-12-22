@@ -25,7 +25,7 @@ module.exports = React.createClass({
     this.setState(getState());
   },
   render: function(){
-    return (<div className="inner-container">
+    return (<div>
               <Header basket={this.state.basket} />
               <Product product={this.state.product} selected={this.state.selected} />
               <Articles />

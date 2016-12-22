@@ -13,7 +13,7 @@ module.exports = React.createClass({
     return numberOfItems === 0 ? 'Empty' : parseInt(numberOfItems)+' Item'+(numberOfItems>1?'s':'');
   },
   render: function(){
-    return (<div className="header">
+    return (<div className="header inner-container">
         <div className="logo">
             restore solutions
         </div>

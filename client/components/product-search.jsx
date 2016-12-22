@@ -22,7 +22,7 @@ module.exports = React.createClass({
   },
   render: function(){
     return (<div className="search-form-container">
-              <div className="search-form">
+              <div className="search-form inner-container">
                 <div className="search-form-inner">
                   <div className="title">Specify Your PC and OS Version</div>
                   <form>
