@@ -1,8 +1,8 @@
-var database = require('./../data/database');
+var sqlserver = require('./../data/sqlserver');
 
 module.exports.get = function(){
     return new Promise(function(resolve,reject){
-        database.getMakes().then(function(makes){
+        sqlserver.execute('SELECT * FROM Makes').then(function(makes){
             resolve(makes);
         }, function(err){
             reject(err);

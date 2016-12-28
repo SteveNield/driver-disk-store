@@ -1,9 +1,35 @@
-var database = require('./../data/database')
+var database = require('./../data/sqlserver'),
+    sql = require('seriate'),
     Basket = require('./../models/Basket'),
     BasketItem = require('./../models/BasketItem');
 
+const selectBasket = 'SELECT BI.* FROM Basket B INNER JOIN BasketItem BI ON BI.BasketId = B.BasketId WHERE B.BasketId = @BasketId';
+const insertBasket = 'INSERT INTO Basket B (Id) VALUES (@BasketId)';
+
+function BasketIdParam(id){
+  return {
+    type: sql.UNIQUEIDENTIFIER,
+    val: id
+  }
+}
+
+function getBasket(id){
+  var getBasketRows = sqlserver.execute(selectBasket, {
+    BasketId: BasketIdParam(id)
+  });
+  return new Promise(function(resolve, reject){
+    getBasketRows.then(function(basketItems){
+      var basket = new Basket(id);
+      basketItems.map(function(basketItem){
+        basket.items.push(basketItem);
+      });
+      resolve(basket);
+    }, reject);
+  })
+}
+
 module.exports.get = function(id){
-  return database.getBasket(id);
+  return getBasket(id);
 }
 
 module.exports.addSku = function(basketId, sku){

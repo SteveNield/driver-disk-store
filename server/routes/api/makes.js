@@ -11,7 +11,7 @@ module.exports = function(app){
         makeRepo.get().then(function(makes){
             res.json(makes);
         }, function(err){
-            loggr.error('Error connecting to API:'+JSON.stringify(err));
+            loggr.error(err);
             res.status(500).send();
         });
       } catch(err){
