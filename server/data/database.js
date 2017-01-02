@@ -1,54 +1,11 @@
-var currencyFormatter = require('./../../lib/currency-formatter'),
-    data = require('./data.json');
+var mongoose = require('mongoose'),
+    config = require('./../server.conf');
 
-module.exports.getProduct = function(make, model, operatingSystem){
-  return new Promise(function(resolve, reject){
-    try{
-      var product = data.products.find(function(product){
-        if (product.make === make &&
-            product.model === model &&
-            product.operatingSystem === operatingSystem)
-            return true;
-        else
-            return false;
-      });
-      product.options = data.options.filter(function(option){
-        if (product.optionIds.indexOf(option.id) !== -1){
-          return true;
-        } else {
-          return false;
-        }
-      });
-      resolve(product);
-    } catch(err){
-      reject(err);
-    }
-  });
-}
+module.exports.connect = function(){
+    if (mongoose.connection.readyState === 0)
+        mongoose.connect(config.database.uri);
+};
 
-module.exports.getMakes = function(){
-  return Promise.resolve(data.makes);
-}
-
-module.exports.getModels = function(makeId){
-  return Promise.resolve(data.models.filter(function(model){
-      return model.makeId === makeId;
-  }));
-}
-
-module.exports.getOperatingSystems = function(){
-  return Promise.resolve(data.operatingSystems);
-}
-
-module.exports.saveBasket = function(basket){
-  return new Promise(function(resolve, reject){
-    data.baskets[basket.id] = basket;
-    resolve(basket);
-  });
-}
-
-module.exports.getBasket = function(id){
-  return new Promise(function(resolve, reject){
-    resolve(data.baskets[id]);
-  })
-}
+module.exports.disconnect = function(){
+    mongoose.disconnect();
+};

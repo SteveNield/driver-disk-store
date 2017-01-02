@@ -1,21 +1,24 @@
 var supertest = require('supertest'),
     sinon = require('sinon'),
     sinonAsPromised = require('sinon-as-promised'),
-    database = require('./../../../server/data/database');
+    database = require('./../../../server/data/database'),
+    databaseSetup = require('./../../setup/database');
 
 describe('/api/products', function(){
 
     var server, request, sandbox;
 
     beforeEach(function(){
-        server = require('./../../../server');
-        request = supertest(server);
-        sandbox = sinon.collection;
+      databaseSetup.setup();
+      server = require('./../../../server');
+      request = supertest(server);
+      sandbox = sinon.collection;
     });
 
     afterEach(function(){
-        sandbox.restore();
-        server.close();
+      sandbox.restore();
+      server.quit();
+      databaseSetup.tearDown();
     });
 
     it('returns 200', function(done){

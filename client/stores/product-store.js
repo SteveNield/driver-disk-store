@@ -3,18 +3,21 @@ var Dispatcher = require('./../dispatcher'),
     CartConstants = require('./../constants/cart'),
     _ = require('underscore');
 
-var product = {
-      options: []
-    },
+var product = {},
+    options = [],
     selected = {};
 
 function loadProductData(data){
   product = data;
-  selected = data.options[0];
 }
 
 function setSelected(index){
-  selected = product.options[index];
+  selected = options[index];
+}
+
+function setOptions(newOptions){
+  options = newOptions;
+  setSelected(0);
 }
 
 var productStore = _.extend({}, EventEmitter.prototype, {
@@ -23,6 +26,9 @@ var productStore = _.extend({}, EventEmitter.prototype, {
   },
   getSelected: function(){
     return selected;
+  },
+  getOptions: function(){
+    return options;
   },
   emitChange: function(){
     this.emit('change');
@@ -41,6 +47,9 @@ Dispatcher.register(function(payload){
       break;
     case CartConstants.SELECT_OPTION:
       setSelected(action.index);
+      break;
+    case CartConstants.RECEIVE_OPTIONS:
+      setOptions(action.options);
       break;
     default: return true;
   }

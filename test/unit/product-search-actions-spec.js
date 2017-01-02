@@ -58,33 +58,33 @@ describe('product-search-actions', function(){
 
   describe('selectMake', function(){
     it('should dispatch a new SELECT_MAKE event with the supplied data', function(){
-      var makeId = '123';
-      ProductSearchActions.selectMake(makeId);
+      var make = '123';
+      ProductSearchActions.selectMake(make);
       handleAction.should.have.been.calledWith({
         actionType: ProductSearchConstants.SELECT_MAKE,
-        makeId: makeId
+        make: make
       })
     })
   })
 
   describe('selectModel', function(){
     it('should dispatch a new SELECT_MODEL event with the supplied data', function(){
-      var modelId = '123';
-      ProductSearchActions.selectModel(modelId);
+      var model = '123';
+      ProductSearchActions.selectModel(model);
       handleAction.should.have.been.calledWith({
         actionType: ProductSearchConstants.SELECT_MODEL,
-        modelId: modelId
+        model: model
       })
     })
   })
 
   describe('selectOperatingSystem', function(){
     it('should dispatch a new SELECT_OPERATING_SYSTEM event with the supplied data', function(){
-      var operatingSystemId = '123';
-      ProductSearchActions.selectOperatingSystem(operatingSystemId);
+      var operatingSystem = '123';
+      ProductSearchActions.selectOperatingSystem(operatingSystem);
       handleAction.should.have.been.calledWith({
         actionType: ProductSearchConstants.SELECT_OPERATING_SYSTEM,
-        operatingSystemId: operatingSystemId
+        operatingSystem: operatingSystem
       })
     })
   })

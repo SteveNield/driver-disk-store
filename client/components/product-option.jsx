@@ -7,10 +7,10 @@ module.exports = React.createClass({
               <input
                 type="radio"
                 name="options"
-                id={this.props.option.id}
+                id={this.props.option._id}
                 onClick={this.props.changeSelected}
                 value={this.props.index}
-                defaultChecked={(this.props.option.id === this.props.selected)} />
+                defaultChecked={(this.props.option._id === this.props.selected)} />
                 {this.props.option.name}{(this.props.option.delivered) ? " (Delivered)" : ""}
               </label>
           </div>);

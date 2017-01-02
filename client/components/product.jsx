@@ -6,31 +6,41 @@ var React = require('react'),
 module.exports = React.createClass({
   addToBasket: function(event){
     var sku = {
-      product: this.props.product.id,
-      option: this.props.selected.id
+      product: this.props.product._id,
+      option: this.props.selected._id
     };
     CartActions.addToCart(sku);
   },
   changeSelected: function(event){
     CartActions.selectOption(event.target.value);
   },
+  formatPrice: function(){
+    var price = this.props.selected.price;
+    return (!price) ? 'Not-loaded' : currencyFormatter.format('GBP', price);
+  },
+  formatTitle: function(){
+    var product = this.props.product,
+        selectedOption = this.props.selected;
+
+    return product.make+' '+product.model+' Driver Disk on '+selectedOption.name+' for '+product.operatingSystem;
+  },
   render: function(){
     var component = this;
     return (<div className="body-container inner-container">
               <div className="product-row">
-                  <div className="product-title"><h1>{this.props.product.description}</h1></div>
-                  <div className="product-price">{currencyFormatter.format('GBP', this.props.selected.price)}</div>
+                  <div className="product-title"><h1>{this.formatTitle()}</h1></div>
+                  <div className="product-price">{this.formatPrice()}</div>
               </div>
               <div className="product-row">
                   <div className="product-image"><img src={"/interface/"+this.props.selected.image} /></div>
                   <div className="product-options detail-panel">
                       <h2>Options:</h2>
                       {
-                        this.props.product.options.map(function(option, index){
+                        this.props.options.map(function(option, index){
                           return (<ProductOption
                                     option={option}
                                     index={index}
-                                    selected={component.props.selected.id}
+                                    selected={component.props.selected._id}
                                     changeSelected={component.changeSelected} />);
                         })
                       }

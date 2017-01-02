@@ -24,10 +24,10 @@ module.exports.loadOperatingSystems = function(){
   });
 }
 
-module.exports.loadModels = function(makeId){
+module.exports.loadModels = function(make){
   return new Promise(function(resolve, reject){
     httpClient
-      .get('/api/makes/'+makeId+'/models')
+      .get('/api/makes/'+make+'/models')
       .then(function(models){
         ProductSearchActions.receiveModels(models);
         resolve();

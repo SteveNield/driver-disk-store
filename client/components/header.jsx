@@ -2,15 +2,11 @@ var React = require('react');
 
 module.exports = React.createClass({
   resolveBasketSummary: function(){
-    if(!this.props.basket.items)
+    if(this.props.basket.items === undefined || this.props.basket.items.length === 0)
       return 'Empty';
 
-    var numberOfItems = 0,
-        basket = this.props.basket;
-    Object.keys(basket.items).map(function(key){
-      numberOfItems += basket.items[key].quantity;
-    })
-    return numberOfItems === 0 ? 'Empty' : parseInt(numberOfItems)+' Item'+(numberOfItems>1?'s':'');
+    var numberOfItems = this.props.basket.items.length;
+    return numberOfItems+' Item'+(numberOfItems>1?'s':'');
   },
   render: function(){
     return (<div className="header inner-container">

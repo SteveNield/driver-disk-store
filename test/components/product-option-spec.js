@@ -14,7 +14,7 @@ chai.use(chaiEnzyme());
 var expect = chai.expect;
 chai.use(sinonChai);
 
-describe('Product', function(){
+describe('ProductOption', function(){
 
     var component,
         sandbox,
@@ -59,9 +59,9 @@ describe('Product', function(){
       expect(component).to.exist;
     })
     it('sets id on input', function(){
-      option.id = '123123';
+      option._id = '123123';
       shallowRenderComponent();
-      expect(component.find('input').prop('id')).to.equal(option.id);
+      expect(component.find('input').prop('id')).to.equal(option._id);
     })
     describe('when clicked', function(){
       it('calls the changeSelected handler', function(){
@@ -78,7 +78,7 @@ describe('Product', function(){
     describe('when option is selected', function(){
       it('sets defaultChecked to true', function(){
         selected = '123';
-        option.id = '123';
+        option._id = '123';
         shallowRenderComponent();
         expect(component.find('input').prop('defaultChecked')).to.be.true;
       })
@@ -86,7 +86,7 @@ describe('Product', function(){
     describe('when option is no selected', function(){
       it('sets defaultChecked to false', function(){
         selected = '456';
-        option.id = '123';
+        option._id = '123';
         shallowRenderComponent();
         expect(component.find('input').prop('defaultChecked')).to.be.false;
       })

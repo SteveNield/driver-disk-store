@@ -46,11 +46,7 @@ describe('DropDown', function(){
       expect(component).to.exist;
     })
     it('renders 1 option for each item', function(){
-      items = [
-        { id: '123', name: 'red' },
-        { id: '456', name: 'green' },
-        { id: '789', name: 'blue' }
-      ];
+      items = ['red','green','blue'];
       shallowRenderComponent();
       expect(component.find('option.item').length).to.equal(items.length);
     })

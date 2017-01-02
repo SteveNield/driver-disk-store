@@ -2,6 +2,7 @@ var supertest = require('supertest'),
     chai = require('chai'),
     sinonAsPromised = require('sinon-as-promised'),
     database = require('./../../../server/data/database'),
+    databaseSetup = require('./../../setup/database'),
     sinon = require('sinon');
 
 var should = chai.should();
@@ -14,14 +15,16 @@ describe('/operatingsystems', function(){
         { id:"123", name:"Windows 10" }];
 
     beforeEach(function(){
-        server = require('./../../../server');
-        request = supertest(server);
-        sandbox = sinon.collection;
+      databaseSetup.setup();
+      server = require('./../../../server');
+      request = supertest(server);
+      sandbox = sinon.collection;
     });
 
     afterEach(function(){
-        sandbox.restore();
-        server.close();
+      sandbox.restore();
+      server.quit();
+      databaseSetup.tearDown();
     });
 
     it('returns 200', function(done){

@@ -2,6 +2,7 @@ var supertest = require('supertest'),
     basketRepo = require('./../../../server/repositories/basket-repo'),
     sinon = require('sinon'),
     sinonAsPromised = require('sinon-as-promised'),
+    database = require('./../../setup/database');
     chai = require('chai');
 
 var should = chai.should();
@@ -10,6 +11,7 @@ describe('/api/basket', function(){
     var server, request, sandbox;
 
     beforeEach(function(){
+      database.setup();
       sandbox = sinon.collection;
       server = require('./../../../server');
       request = supertest(server);
@@ -17,7 +19,8 @@ describe('/api/basket', function(){
 
     afterEach(function(){
       sandbox.restore();
-      server.close();
+      server.quit();
+      databaseSetup.tearDown();
     });
     describe('/:id', function(){
       describe('get', function(){

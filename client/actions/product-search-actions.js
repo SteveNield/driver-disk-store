@@ -1,7 +1,7 @@
 var Dispatcher = require('./../dispatcher'),
     ProductSearchConstants = require('./../constants/product-search');
 
-var cartActions = {
+var productSearchActions = {
   receiveMakes: function(makes){
     Dispatcher.handleAction({
       actionType: ProductSearchConstants.RECEIVE_MAKES,
@@ -20,24 +20,24 @@ var cartActions = {
       models: models
     })
   },
-  selectMake: function(makeId){
+  selectMake: function(make){
     Dispatcher.handleAction({
       actionType: ProductSearchConstants.SELECT_MAKE,
-      makeId: makeId
+      make: make
     })
   },
-  selectModel: function(modelId){
+  selectModel: function(model){
     Dispatcher.handleAction({
       actionType: ProductSearchConstants.SELECT_MODEL,
-      modelId: modelId
+      model: model
     })
   },
-  selectOperatingSystem: function(operatingSystemId){
+  selectOperatingSystem: function(operatingSystem){
     Dispatcher.handleAction({
       actionType: ProductSearchConstants.SELECT_OPERATING_SYSTEM,
-      operatingSystemId: operatingSystemId
+      operatingSystem: operatingSystem
     })
   }
 }
 
-module.exports = cartActions;
+module.exports = productSearchActions;

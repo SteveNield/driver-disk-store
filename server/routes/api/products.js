@@ -1,13 +1,18 @@
 var express = require('express'),
     productRepo = require('./../../repositories/product-repo'),
+    uri = require('./../../../lib/uri'),
     loggr = require('./../../../lib/loggr');
 
 module.exports = function(app){
     var router = express.Router();
 
     router.get('/:make/:model/:operatingSystem', function(req,res){
+      var make = uri.decodeArgument(req.params.make),
+          model = uri.decodeArgument(req.params.model),
+          operatingSystem = uri.decodeArgument(req.params.operatingSystem);
+
       try{
-        productRepo.get(req.params.make, req.params.model, req.params.operatingSystem).then(function(product){
+        productRepo.get(make, model, operatingSystem).then(function(product){
             res.json(product)
         }, function(err){
             loggr.error(err);

@@ -9,6 +9,7 @@ function getState(){
   return {
     product: ProductStore.getProduct(),
     selected: ProductStore.getSelected(),
+    options: ProductStore.getOptions(),
     basket: BasketStore.getBasket()
   }
 }
@@ -27,7 +28,10 @@ module.exports = React.createClass({
   render: function(){
     return (<div>
               <Header basket={this.state.basket} />
-              <Product product={this.state.product} selected={this.state.selected} />
+              <Product
+                product={this.state.product}
+                options={this.state.options}
+                selected={this.state.selected} />
               <Articles />
             </div>)
   }

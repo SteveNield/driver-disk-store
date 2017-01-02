@@ -25,6 +25,12 @@ var cartActions = {
       actionType: Events.CART_ADD,
       sku: sku
     })
+  },
+  receiveOptions: function(options){
+    Dispatcher.handleAction({
+      actionType: Events.RECEIVE_OPTIONS,
+      options: options
+    })
   }
 }
 

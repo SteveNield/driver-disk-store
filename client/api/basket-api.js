@@ -7,12 +7,16 @@ var httpClient = require('./../../lib/http-client'),
 function addSku(basketId, sku){
   return httpClient.put(
     '/api/basket/'+basketId+'/items',
-    { sku: sku }
+    sku
   );
 }
 
 function get(basketId){
   return httpClient.get('/api/basket/'+basketId);
+}
+
+function create(){
+  return httpClient.put('/api/basket');
 }
 
 function loadBasketData(){
@@ -42,4 +46,5 @@ function loadBasketData(){
 
 module.exports.addSku = addSku;
 module.exports.get = get;
+module.exports.create = create;
 module.exports.loadBasketData = loadBasketData;

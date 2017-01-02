@@ -26,6 +26,21 @@ gulp.task('test', function () {
     }));
 });
 
+gulp.task('test-integration', function(){
+  return gulp
+    .src([
+      './test/integration/*-spec.js'],
+      {
+        read: false })
+    .pipe(mocha({
+      reporter: 'spec',
+      timeout: 100000,
+      compilers: {
+        js: babel
+      }
+    }));
+})
+
 gulp.task('bundle', ['bundle-css','bundle-js']);
 
 gulp.task('bundle-js', function () {

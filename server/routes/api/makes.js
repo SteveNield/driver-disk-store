@@ -1,18 +1,20 @@
 var express = require('express'),
-    makeRepo = require('./../../repositories/make-repo'),
-    modelRepo = require('./../../repositories/model-repo'),
+    productRepo = require('./../../repositories/product-repo'),
     loggr = require('./../../../lib/loggr');
+
+function handleError(err){
+}
 
 module.exports = function(app){
     var router = express.Router();
 
     router.get('/', function(req,res){
       try{
-        makeRepo.get().then(function(makes){
+        productRepo.getMakes().then(function(makes){
             res.json(makes);
         }, function(err){
-            loggr.error(err);
-            res.status(500).send();
+          loggr.error(err);
+          res.status(500).send();
         });
       } catch(err){
         loggr.error(err);
@@ -20,13 +22,13 @@ module.exports = function(app){
       }
     });
 
-    router.get('/:makeId/models', function(req,res){
+    router.get('/:make/models', function(req,res){
       try{
-        modelRepo.getWithMakeId(req.params.makeId).then(function(models){
+        productRepo.getModelsForMake(req.params.make).then(function(models){
             res.json(models);
         }, function(err){
-            loggr.error('Error connecting to API:'+JSON.stringify(err));
-            res.status(err.status === 404 ? 404 : 500).send();
+          loggr.error(err);
+          res.status(500).send();
         });
       } catch(err){
         loggr.error(err);

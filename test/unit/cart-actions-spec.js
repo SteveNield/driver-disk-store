@@ -64,4 +64,15 @@ describe('cart-actions', function(){
       })
     })
   })
+
+  describe('receiveOptions', function(){
+    it('should dispatch a new RECEIVE_OPTIONS event with the supplied data', function(){
+      var options = [];
+      CartActions.receiveOptions(options);
+      handleAction.should.have.been.calledWith({
+        actionType: CartConstants.RECEIVE_OPTIONS,
+        options: options
+      })
+    })
+  })
 })

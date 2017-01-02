@@ -4,10 +4,13 @@ var basketApi = require('./../../client/api/basket-api'),
     cookieJar = require('./../../client/cookie-jar'),
     config = require('./../../client/api.conf'),
     chai = require('chai'),
+    chaiAsPromised = require('chai-as-promised'),
     sinon = require('sinon'),
+    sinonAsPromised = require('sinon-as-promised'),
     assertPromise = require('./../assert-promise');
 
 var should = chai.should();
+chai.use(chaiAsPromised);
 
 describe('basket-api', function(){
   var sandbox;
@@ -28,7 +31,7 @@ describe('basket-api', function(){
       var basketId = '098098',
           sku = { id: 123 },
           expectedUrl = config.api.host+'/api/basket/098098/items',
-          expectedBody = { sku: sku };
+          expectedBody = sku;
 
       var stub = sandbox
         .stub(httpClient, 'put')

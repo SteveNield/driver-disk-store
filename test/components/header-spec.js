@@ -26,7 +26,7 @@ describe('Header', function(){
 
         basket = {
           id: '123',
-          items: {}
+          items: []
         }
     })
 
@@ -50,42 +50,28 @@ describe('Header', function(){
       shallowRenderComponent();
       expect(component.find('.detail .text').text()).to.equal(text);
     }
-    describe('when basket.items is undefined', function(){
-      it('displays "Empty"', function(){
-        basket.items = undefined;
-        testBasketSummary('Empty');
-      })
-    })
     describe('when basket is empty', function(){
       it('displays "Empty"', function(){
         basket.items = [];
         testBasketSummary('Empty');
       })
     })
-    describe('when basket contains 1 item with a quantity of 1', function(){
+    describe('when basket.items is undefined', function(){
+      it('displays "Empty"', function(){
+        basket.items = undefined;
+        testBasketSummary('Empty');
+      })
+    })
+    describe('when basket contains 1 item', function(){
       it('displays "1 item"', function(){
-        basket.items[1] = { id: '123', quantity: 1 };
+        basket.items[0] = { id: '123' };
         testBasketSummary('1 Item');
       })
     })
-    describe('when basket contains 1 item with a quantity of 4', function(){
-      it('displays "4 items"', function(){
-        basket.items[1] = { id: '123', quantity: 4 };
+    describe('when basket contains 4 items', function(){
+      it('displays "4 Items"', function(){
+        basket.items = [{},{},{},{}];
         testBasketSummary('4 Items');
-      })
-    })
-    describe('when basket contains 2 items with a quantity of 1 each', function(){
-      it('displays "2 items"', function(){
-        basket.items[1] = { id: '123', quantity: 1 };
-        basket.items[2] = { id: '456', quantity: 1 }
-        testBasketSummary('2 Items');
-      })
-    })
-    describe('when basket contains 2 items with different quantities', function(){
-      it('displays "9 items"', function(){
-        basket.items[1] = { id: '123', quantity: 2 };
-        basket.items[2] = { id: '456', quantity: 7 };
-        testBasketSummary('9 Items');
       })
     })
 });

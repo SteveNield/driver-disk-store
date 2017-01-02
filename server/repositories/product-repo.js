@@ -1,31 +1,59 @@
-var database = require('./../data/database'),
-    currencyFormatter = require('./../../lib/currency-formatter');
+var Product = require('./../models/Product');
 
 module.exports.get = function(make, model, operatingSystem){
-    if(!make){
-        return Promise.reject({ message: 'Make is missing' });
-    }
-
-    if(!model){
-        return Promise.reject({ message: 'Model is missing' });
-    }
-
-    if(!operatingSystem){
-        return Promise.reject({ message: 'Operating system is missing' });
-    }
-
-    return new Promise(function(resolve, reject){
-      try{
-        database.getProduct(make, model, operatingSystem).then(function(product){
-            if(!product){
-                reject(new Err('Specified product does not exist'));
-            }
-            resolve(product);
-        }, function(err){
-            reject(err);
-        });
-      } catch(err){
+  return new Promise(function(resolve, reject){
+    Product.findOne({
+      make: make,
+      model: model,
+      operatingSystem: operatingSystem
+    }, function(err, product){
+      if(err){
         reject(err);
+      } else {
+        resolve(product);
       }
     });
+  })
+}
+
+module.exports.getMakes = function(){
+  return new Promise(function(resolve, reject){
+    Product.distinct("make", function(err, makes){
+      if(err)
+        reject(err);
+      else
+        resolve(makes);
+    });
+  })
+}
+
+module.exports.getModelsForMake = function(make){
+  return new Promise(function(resolve, reject){
+    Product.find({
+      make: make
+    }, function(err, products){
+      if(err){
+        reject(err);
+      } else {
+        resolve(
+          products.map(function(product){
+            return product.model;
+          }).filter(function(model, index, self){
+            return self.indexOf(model) === index;
+          })
+        )
+      }
+    })
+  });
+}
+
+module.exports.getOperatingSystems = function(){
+  return new Promise(function(resolve, reject){
+    Product.distinct("operatingSystem", function(err, operatingSystems){
+      if(err)
+        reject(err);
+      else
+        resolve(operatingSystems);
+    });
+  });
 }

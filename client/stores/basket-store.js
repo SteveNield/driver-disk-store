@@ -16,21 +16,21 @@ function loadBasketData(basket){
 }
 
 function add(sku){
-  function getOrSetBasketId(){
-    var basketId = cookieJar.get('basket');
-    if(!basketId){
-      basketId = uuid.v1();
-      cookieJar.add('basket', basketId);
-    }
-    return basketId;
+  function persistSku(basketId, sku){
+    basketApi.addSku(basketId, sku).then(function(){
+      basketApi.loadBasketData();
+    }, loggr.error)
   }
 
-  var basketId = getOrSetBasketId();
-  basketApi.addSku(basketId, sku).then(function(){
-    basketApi.loadBasketData();
-  }, function(err){
-    loggr.error('Error adding item to basket')
-  })
+  var basketId = cookieJar.get('basket');
+  if(basketId){
+    persistSku(basketId, sku);
+  } else {
+    basketApi.create().then(function(basket){
+      cookieJar.add('basket', basket._id);
+      persistSku(basket._id, sku);
+    });
+  }
 }
 
 var cartStore = _.extend({}, EventEmitter.prototype, {

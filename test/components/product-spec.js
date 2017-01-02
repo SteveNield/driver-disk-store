@@ -23,6 +23,7 @@ describe('Product', function(){
         sandbox,
         stubs,
         product,
+        options,
         selected;
 
     beforeEach(function(){
@@ -30,13 +31,13 @@ describe('Product', function(){
         sandbox = sinon.collection;
         stubs = stubDependencies();
 
-        product = {
-          options: [{
-            price: 1.11
-          }]
-        };
+        product = {};
 
-        selected = product.options[0];
+        options = [{
+          price: 1.11
+        }];
+
+        selected = options[0];
     })
 
     afterEach(function(){
@@ -44,11 +45,11 @@ describe('Product', function(){
     })
 
     function shallowRenderComponent(){
-      component = enzyme.shallow(<Product product={product} selected={selected} />);
+      component = enzyme.shallow(<Product product={product} options={options} selected={selected} />);
     }
 
     function mountComponent(){
-      component = enzyme.mount(<Product product={product} selected={selected} />);
+      component = enzyme.mount(<Product product={product} options={options} selected={selected} />);
     }
 
     function stubDependencies(){
@@ -76,10 +77,14 @@ describe('Product', function(){
       shallowRenderComponent();
       expect(component).to.exist;
     })
-    it('shows product description', function(){
-      product.description = 'merry christmas';
+    it('product description is correct concatenation of make, model and OS', function(){
+      product.make = 'Acer';
+      product.model = '5580';
+      product.operatingSystem = 'Windows XP';
+      options[0].name = 'DVD ROM';
+      var expectedDescription = 'Acer 5580 Driver Disk on DVD ROM for Windows XP';
       shallowRenderComponent();
-      expect(component.find('.product-title').text()).to.equal(product.description);
+      expect(component.find('.product-title').text()).to.equal(expectedDescription);
     })
     it('shows selected option price', function(){
       stubs.currencyFormatter.format.returns('£1.11');
@@ -92,7 +97,7 @@ describe('Product', function(){
       expect(component.find('.product-image img').prop('src')).to.equal('/interface/'+selected.image);
     })
     it('renders a ProductOption for each product option', function(){
-      product.options = [{ id: '123' }, { id: '4556' }, { id: '789' }];
+      options = [{ _id: '123' }, { _id: '4556' }, { _id: '789' }];
       shallowRenderComponent();
       expect(component.find(ProductOption).length).to.equal(3);
     })

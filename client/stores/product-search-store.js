@@ -66,13 +66,13 @@ Dispatcher.register(function(payload){
       setModels(action.models);
       break;
     case ProductSearchConstants.SELECT_MAKE:
-      selectMake(action.makeId);
+      selectMake(action.make);
       break;
     case ProductSearchConstants.SELECT_MODEL:
-      selectModel(action.modelId);
+      selectModel(action.model);
       break;
     case ProductSearchConstants.SELECT_OPERATING_SYSTEM:
-      selectOperatingSystem(action.operatingSystemId);
+      selectOperatingSystem(action.operatingSystem);
       break;
     default: return true;
   }
