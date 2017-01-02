@@ -17,6 +17,7 @@ module.exports = function(app){
 
       productRepository.get(make, model, operatingSystem).then(function(product){
         if (!product){
+          loggr.info('Product not found: '+req.url);
           res.status(404).send();
         } else {
           try{
