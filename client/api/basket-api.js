@@ -29,7 +29,7 @@ function loadBasketData(){
         CartActions.receiveBasket(basket);
         resolve();
       }, function(err){
-        if (err.status === 400){
+        if (err.status === 404){
           // Client has cookie containing basket ID which does not exist
           cookieJar.remove('basket');
           loggr.info('Removed redundant basket cookie');

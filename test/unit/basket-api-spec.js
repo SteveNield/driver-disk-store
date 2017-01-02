@@ -110,14 +110,14 @@ describe('basket-api', function(){
           }, done);
         })
       })
-      describe('when api returns a 400 error', function(){
+      describe('when api returns a 404 error', function(){
         var cookieJarRemove,
             receiveBasketAction,
             err;
 
         function setup(){
           cookieJarRemove = sandbox.stub(cookieJar, 'remove');
-          err = { status: 400 };
+          err = { status: 404 };
 
           stubCookie('123');
           receiveBasketAction = stubReceiveBasketAction();

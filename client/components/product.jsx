@@ -24,6 +24,10 @@ module.exports = React.createClass({
 
     return product.make+' '+product.model+' Driver Disk on '+selectedOption.name+' for '+product.operatingSystem;
   },
+  resolveImage: function(){
+    var image = this.props.selected.image || 'ajax-loader.gif';
+    return '/interface/'+image;
+  },
   render: function(){
     var component = this;
     return (<div className="body-container inner-container">
@@ -32,7 +36,7 @@ module.exports = React.createClass({
                   <div className="product-price">{this.formatPrice()}</div>
               </div>
               <div className="product-row">
-                  <div className="product-image"><img src={"/interface/"+this.props.selected.image} /></div>
+                  <div className="product-image"><img src={this.resolveImage()} /></div>
                   <div className="product-options detail-panel">
                       <h2>Options:</h2>
                       {

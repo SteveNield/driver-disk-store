@@ -96,6 +96,13 @@ describe('Product', function(){
       shallowRenderComponent();
       expect(component.find('.product-image img').prop('src')).to.equal('/interface/'+selected.image);
     })
+    describe('if selected.image is undefined', function(){
+      it('displays ajaxloader.gif as the img src', function(){
+        selected.image = undefined;
+        shallowRenderComponent();
+        expect(component.find('.product-image img').prop('src')).to.equal('/interface/ajax-loader.gif');
+      })
+    })
     it('renders a ProductOption for each product option', function(){
       options = [{ _id: '123' }, { _id: '4556' }, { _id: '789' }];
       shallowRenderComponent();
