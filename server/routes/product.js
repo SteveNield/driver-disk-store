@@ -7,6 +7,17 @@ var express = require('express'),
     ProductApp = require('./../../client/components/product-app.jsx'),
     Header = require('./../../client/components/header.jsx');
 
+function buildMetaData(product){
+
+  function buildTitle(){
+    return product.make+' '+product.model+' Driver Disk for '+product.operatingSystem;
+  }
+
+  return {
+    title: buildTitle()
+  }
+}
+
 module.exports = function(app){
     var router = express.Router();
 
@@ -21,7 +32,8 @@ module.exports = function(app){
         } else {
           try{
             res.render('product.ejs', {
-                product
+                product: product,
+                meta: buildMetaData(product)
             });
           } catch(err) {
             loggr.error(err);
