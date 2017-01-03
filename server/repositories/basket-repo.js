@@ -15,7 +15,7 @@ module.exports.create = function(){
 
 module.exports.get = function(id){
   return new Promise(function(resolve, reject){
-    Basket.findOne({ _id: mongoose.Types.ObjectId(id) }, function(err, basket){
+    Basket.findOne({ _id: id }, function(err, basket){
       if(err)
         reject(err);
       else {
