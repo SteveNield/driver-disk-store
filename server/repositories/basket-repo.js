@@ -1,5 +1,5 @@
 var Basket = require('./../models/basket'),
-    validObjectId = require('valid-objectid');
+    mongoose = require('mongoose');
 
 module.exports.create = function(){
   return new Promise(function(resolve, reject){
@@ -14,10 +14,8 @@ module.exports.create = function(){
 }
 
 module.exports.get = function(id){
-  var idIsValid = validObjectId.isValid(id);
-  console.log(idIsValid ? "ID is Valid" : "ID is not Valid");
   return new Promise(function(resolve, reject){
-    Basket.findOne({ _id: id }, function(err, basket){
+    Basket.findOne({ _id: mongoose.Types.ObjectId(id) }, function(err, basket){
       if(err)
         reject(err);
       else {
