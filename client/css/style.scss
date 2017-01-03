@@ -264,11 +264,16 @@ hr {
 
 .product-row .product-image {
     float:left;
+    text-align:center;
 }
 
-.product-row .product-image img {
+.product-row .product-image img.product {
     height:300px;
     width:400px;
+}
+
+.product-row .product-image img.loading {
+  margin-top:120px;
 }
 
 .product-row .product-options {

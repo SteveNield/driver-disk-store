@@ -1,6 +1,4 @@
-var express = require('express'),
-    React = require('react'),
-    ReactDom = require('react-dom/server');
+var express = require('express');
 
 module.exports = function(app){
     var router = express.Router();

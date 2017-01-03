@@ -3,9 +3,7 @@ var express = require('express'),
     ReactDom = require('react-dom/server'),
     loggr = require('./../../lib/loggr'),
     uri = require('./../../lib/uri'),
-    productRepository = require('./../repositories/product-repo'),
-    ProductApp = require('./../../client/components/product-app.jsx'),
-    Header = require('./../../client/components/header.jsx');
+    productRepository = require('./../repositories/product-repo');
 
 function buildMetaData(product){
 
