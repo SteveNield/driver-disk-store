@@ -1,4 +1,5 @@
-var Basket = require('./../models/basket');
+var Basket = require('./../models/basket'),
+    validObjectId = require('valid-objectid');
 
 module.exports.create = function(){
   return new Promise(function(resolve, reject){
@@ -13,6 +14,8 @@ module.exports.create = function(){
 }
 
 module.exports.get = function(id){
+  var idIsValid = validObjectId.isValid(id);
+  console.log(idIsValid ? "ID is Valid" : "ID is not Valid");
   return new Promise(function(resolve, reject){
     Basket.findOne({ _id: id }, function(err, basket){
       if(err)
