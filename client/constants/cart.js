@@ -5,5 +5,6 @@ module.exports = keyMirror({
   SELECT_OPTION: null,
   RECEIVE_DATA: null,
   RECEIVE_BASKET: null,
-  RECEIVE_OPTIONS: null
+  RECEIVE_OPTIONS: null,
+  BASKET_REMOVE: null
 })

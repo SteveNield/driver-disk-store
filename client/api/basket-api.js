@@ -19,6 +19,10 @@ function create(){
   return httpClient.put('/api/basket');
 }
 
+function removeItem(basketId, basketItemId){
+  return httpClient.delete('/api/basket/'+basketId+'/items/'+basketItemId);
+}
+
 function loadBasketData(){
   var basketId = cookieJar.get('basket');
   return new Promise(function(resolve, reject){
@@ -45,6 +49,7 @@ function loadBasketData(){
 }
 
 module.exports.addSku = addSku;
+module.exports.removeItem = removeItem;
 module.exports.get = get;
 module.exports.create = create;
 module.exports.loadBasketData = loadBasketData;

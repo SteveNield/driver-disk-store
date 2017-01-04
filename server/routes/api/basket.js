@@ -37,5 +37,14 @@ module.exports = function(app){
       });
     })
 
+    router.delete('/:basketId/items/:basketItemId', function(req,res){
+      basketRepo.removeItem(req.params.basketId, req.params.basketItemId).then(function(){
+        res.send();
+      }, function(err){
+        loggr.error(err);
+        res.status().send(err);
+      });
+    })
+
     app.use('/api/basket', router);
 }

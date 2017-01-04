@@ -1,8 +1,8 @@
 var supertest = require('supertest'),
     chai = require('chai'),
     sinonAsPromised = require('sinon-as-promised'),
-    database = require('./../../../server/data/database'),
-    databaseSetup = require('./../../setup/database'),
+    database = require('./../../setup/database'),
+    productRepo = require('./../../../server/repositories/product-repo')
     sinon = require('sinon');
 
 var should = chai.should();
@@ -15,21 +15,21 @@ describe('/makes/:id/models', function(){
         { id:"123", name:"aspire 5560" }];
 
     beforeEach(function(){
-      databaseSetup.setup();
+      database.setup();
       server = require('./../../../server');
       request = supertest(server);
       sandbox = sinon.collection;
     });
 
     afterEach(function(){
-      databaeSetup.tearDown();
+      database.tearDown();
       sandbox.restore();
       server.quit();
     });
 
     it('returns 200', function(done){
         sandbox
-            .stub(database, 'getModels')
+            .stub(productRepo, 'getModelsForMake')
             .withArgs('123')
             .resolves(mock);
 
@@ -44,7 +44,7 @@ describe('/makes/:id/models', function(){
 
     it('returns makes from driver API', function(done){
         sandbox
-            .stub(database, 'getModels')
+            .stub(productRepo, 'getModelsForMake')
             .withArgs('123')
             .resolves(mock);
 
@@ -65,7 +65,7 @@ describe('/makes/:id/models', function(){
 
     it('returns 500 if driver API call fails', function(done){
         sandbox
-            .stub(database, 'getModels')
+            .stub(productRepo, 'getModelsForMake')
             .withArgs('123')
             .rejects('FAILURE');
 

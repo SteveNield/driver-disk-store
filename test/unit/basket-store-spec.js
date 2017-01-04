@@ -8,6 +8,6 @@ describe('basket-store', function(){
     basketStore.should.exist;
   })
   it('initializes with empty basket', function(){
-    basketStore.getBasket().should.deep.equal({});
+    basketStore.getBasket().should.deep.equal({ items: [] });
   })
 })

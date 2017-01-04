@@ -1,6 +1,7 @@
 require('./../dom-mock')('<html><body></body></html>');
 
 var Header = require('./../../client/components/header.jsx'),
+    browser = require('./../../client/browser'),
     enzyme = require('enzyme'),
     chai = require('chai'),
     chaiEnzyme = require('chai-enzyme'),
@@ -18,11 +19,13 @@ describe('Header', function(){
 
     var component,
         sandbox,
-        basket;
+        basket,
+        stubs;
 
     beforeEach(function(){
         jsdom({skipWindowCheck: true});
         sandbox = sinon.collection;
+        stubDependencies();
 
         basket = {
           id: '123',
@@ -33,6 +36,15 @@ describe('Header', function(){
     afterEach(function(){
       sandbox.restore();
     })
+
+    function stubDependencies(){
+      stubs = {
+        browser: {}
+      };
+
+      stubs.browser.redirect = sandbox
+        .stub(browser, 'redirect');
+    }
 
     function shallowRenderComponent(){
       component = enzyme.shallow(<Header basket={basket} />);
@@ -72,6 +84,13 @@ describe('Header', function(){
       it('displays "4 Items"', function(){
         basket.items = [{},{},{},{}];
         testBasketSummary('4 Items');
+      })
+    })
+    describe('when "View Basket" is clicked', function(){
+      it('redirects browser to /basket', function(){
+        shallowRenderComponent();
+        component.find('.submit-button').simulate('click');
+        stubs.browser.redirect.should.have.been.calledWith('/basket');
       })
     })
 });

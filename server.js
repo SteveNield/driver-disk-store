@@ -17,6 +17,7 @@ app.use(bodyParser());
 
 require('./server/routes/index')(app);
 require('./server/routes/product')(app);
+require('./server/routes/view-basket')(app);
 
 require('./server/routes/api/makes')(app);
 require('./server/routes/api/operating-systems')(app);

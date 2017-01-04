@@ -12,7 +12,7 @@ var gulp = require('gulp'),
 gulp.task('test', function () {
   return gulp
     .src([
-      './test/acceptance/*-spec.js',
+      './test/acceptance/**/*-spec.js',
       './test/components/*-spec.js',
       './test/unit/*-spec.js'],
       {
@@ -26,34 +26,22 @@ gulp.task('test', function () {
     }));
 });
 
-gulp.task('test-integration', function(){
-  return gulp
-    .src([
-      './test/integration/*-spec.js'],
-      {
-        read: false })
-    .pipe(mocha({
-      reporter: 'spec',
-      timeout: 100000,
-      compilers: {
-        js: babel
-      }
-    }));
-})
-
 gulp.task('bundle', ['bundle-css','bundle-js']);
 
 gulp.task('bundle-js', function () {
+  var entryPoints = [
+    'index',
+    'product',
+    'view-basket'
+  ];
+
+  entryPoints.map(function(entryPoint){
     gulp
-        .src('client/index.jsx')
-        .pipe(webpack(webpackConfig('index')))
-        .pipe(uglify())
-        .pipe(gulp.dest('static/'));
-    gulp
-      .src('client/product.jsx')
-      .pipe(webpack(webpackConfig('product')))
+      .src('client/'+entryPoint+'.jsx')
+      .pipe(webpack(webpackConfig(entryPoint)))
       .pipe(uglify())
-      .pipe(gulp.dest('static/'))
+      .pipe(gulp.dest('static/'));
+  });
 });
 
 gulp.task('bundle-css', function () {

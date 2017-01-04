@@ -31,6 +31,12 @@ var cartActions = {
       actionType: Events.RECEIVE_OPTIONS,
       options: options
     })
+  },
+  removeFromBasket: function(basketItemId){
+    Dispatcher.handleAction({
+      actionType: Events.BASKET_REMOVE,
+      basketItemId: basketItemId
+    })
   }
 }
 

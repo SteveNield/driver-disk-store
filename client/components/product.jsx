@@ -1,6 +1,7 @@
 var React = require('react'),
     ProductOption = require('./product-option.jsx'),
     CartActions = require('./../actions/cart-actions'),
+    productPresentation = require('./../presentation/product-presentation'),
     currencyFormatter = require('./../../lib/currency-formatter');
 
 module.exports = React.createClass({
@@ -18,12 +19,6 @@ module.exports = React.createClass({
     var price = this.props.selected.price;
     return (!price) ? 'Not-loaded' : currencyFormatter.format('GBP', price);
   },
-  formatTitle: function(){
-    var product = this.props.product,
-        selectedOption = this.props.selected;
-
-    return product.make+' '+product.model+' Driver Disk on '+selectedOption.name+' for '+product.operatingSystem;
-  },
   getImageProps: function(){
     var imageName = this.props.selected.image || 'ajax-loader.gif';
     var className = this.props.selected.image ? 'product' : 'loading';
@@ -36,7 +31,7 @@ module.exports = React.createClass({
     var component = this;
     return (<div className="body-container inner-container">
               <div className="product-row">
-                  <div className="product-title"><h1>{this.formatTitle()}</h1></div>
+                  <div className="product-title"><h1>{productPresentation.getTitle(this.props.product, this.props.selected)}</h1></div>
                   <div className="product-price">{this.formatPrice()}</div>
               </div>
               <div className="product-row">

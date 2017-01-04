@@ -58,6 +58,10 @@ hr {
     letter-spacing:1px;
 }
 
+.submit-button span.glyphicon {
+  margin-right:6px;
+}
+
 .inner-container {
     max-width: 1006px;
     margin: 12px auto;
@@ -296,4 +300,47 @@ hr {
 
 .product-row .add-to-basket {
     float:right;
+}
+
+/* VIEW BASKET */
+.basket {
+    overflow:hidden;
+    font-size:medium;
+}
+
+.basket table {
+    width:100%;
+    margin-top:12px;
+}
+
+.basket td {
+    padding:6px 0;
+}
+
+.basket td img {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.basket .basket-row {
+    padding:0 36px 12px 0;
+    width:100%;
+    text-align:right;
+    overflow:hidden;
+}
+
+.basket .basket-row > span {
+    display:block;
+    float:right;
+    padding:6px 0;
+}
+
+.basket .total {
+    font-weight:600;
+}
+
+.basket .basket-row .price {
+    margin-left:24px;
+    color: #79BE7B;
 }

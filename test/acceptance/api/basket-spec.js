@@ -20,7 +20,7 @@ describe('/api/basket', function(){
     afterEach(function(){
       sandbox.restore();
       server.quit();
-      databaseSetup.tearDown();
+      database.tearDown();
     });
     describe('/:id', function(){
       describe('get', function(){
@@ -59,7 +59,7 @@ describe('/api/basket', function(){
             try{
                 request
                   .put('/api/basket/123/items')
-                  .send({ sku: sku })
+                  .send(sku)
                   .end(function(err, res){
                     if(err)
                       done(err);
@@ -71,6 +71,30 @@ describe('/api/basket', function(){
                 done(err);
             }
           });
+        })
+        describe('delete', function(){
+          it('calls remove on basketRepo', function(done){
+            var stub = sandbox
+              .stub(basketRepo, 'removeItem')
+              .resolves();
+
+            var basketId = '123',
+                basketItemId = '567';
+
+            try{
+              request
+                .delete('/api/basket/123/items/567')
+                .end(function(err, res){
+                  if(err)
+                    done(err);
+
+                  stub.should.have.been.calledWith('123', '567');
+                  done();
+                })
+            } catch(err){
+              done(err);
+            }
+          })
         })
       })
     })

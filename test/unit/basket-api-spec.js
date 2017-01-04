@@ -47,6 +47,26 @@ describe('basket-api', function(){
       }, done)
     })
   })
+  describe('removeItem', function(){
+    it('calls delete on httpClient with correct URL', function(done){
+      var basketId = '123',
+          basketItemId = '7678',
+          expectedUrl = '/api/basket/123/items/7678';
+
+      var stub = sandbox
+        .stub(httpClient, 'delete')
+        .resolves();
+
+      basketApi.removeItem(basketId, basketItemId).then(function(){
+        try{
+          stub.should.have.been.calledWith(expectedUrl);
+          done();
+        } catch(err){
+          done(err)
+        }
+      }, done)
+    })
+  })
   describe('get', function(){
     it('calls get on httpClient with correct URL and returns basket', function(){
       var basketId = '9875454',

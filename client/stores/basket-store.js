@@ -7,11 +7,15 @@ var Dispatcher = require('./../dispatcher'),
     loggr = require('./../../lib/loggr'),
     _ = require('underscore');
 
-var state = {}
+var state = {
+  basket: {
+    items: []
+  }
+}
 
 function loadBasketData(basket){
-  state = basket;
-  loggr.info('Basket changed: '+JSON.stringify(state));
+  state.basket = basket;
+  loggr.info('Basket changed: '+JSON.stringify(state.basket));
   cartStore.emitChange();
 }
 
@@ -33,6 +37,12 @@ function add(sku){
   }
 }
 
+function remove(basketItemId){
+  basketApi.removeItem(state.basket._id, basketItemId).then(function(){
+    basketApi.loadBasketData();
+  }, loggr.error);
+}
+
 var cartStore = _.extend({}, EventEmitter.prototype, {
   emitChange: function(){
     this.emit('change')
@@ -41,7 +51,7 @@ var cartStore = _.extend({}, EventEmitter.prototype, {
     this.on('change', cb);
   },
   getBasket: function(){
-    return state;
+    return state.basket;
   }
 });
 
@@ -51,6 +61,9 @@ Dispatcher.register(function(payload){
   switch(action.actionType){
     case CartConstants.CART_ADD:
       add(action.sku);
+      break;
+    case CartConstants.BASKET_REMOVE:
+      remove(action.basketItemId);
       break;
     case CartConstants.RECEIVE_BASKET:
       loadBasketData(action.data);

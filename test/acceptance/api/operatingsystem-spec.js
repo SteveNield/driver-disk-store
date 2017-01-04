@@ -1,8 +1,8 @@
 var supertest = require('supertest'),
     chai = require('chai'),
     sinonAsPromised = require('sinon-as-promised'),
-    database = require('./../../../server/data/database'),
-    databaseSetup = require('./../../setup/database'),
+    database = require('./../../setup/database'),
+    productRepo = require('./../../../server/repositories/product-repo'),
     sinon = require('sinon');
 
 var should = chai.should();
@@ -15,7 +15,7 @@ describe('/operatingsystems', function(){
         { id:"123", name:"Windows 10" }];
 
     beforeEach(function(){
-      databaseSetup.setup();
+      database.setup();
       server = require('./../../../server');
       request = supertest(server);
       sandbox = sinon.collection;
@@ -24,12 +24,12 @@ describe('/operatingsystems', function(){
     afterEach(function(){
       sandbox.restore();
       server.quit();
-      databaseSetup.tearDown();
+      database.tearDown();
     });
 
     it('returns 200', function(done){
         sandbox
-            .stub(database, 'getOperatingSystems')
+            .stub(productRepo, 'getOperatingSystems')
             .resolves(mock);
 
         try{
@@ -43,7 +43,7 @@ describe('/operatingsystems', function(){
 
     it('returns opreating systems from driver API', function(done){
         sandbox
-            .stub(database, 'getOperatingSystems')
+            .stub(productRepo, 'getOperatingSystems')
             .resolves(mock);
 
         try{
@@ -63,7 +63,7 @@ describe('/operatingsystems', function(){
 
     it('returns 500 if driver API call fails', function(done){
         sandbox
-            .stub(database, 'getOperatingSystems')
+            .stub(productRepo, 'getOperatingSystems')
             .rejects('FAILURE');
 
         try{

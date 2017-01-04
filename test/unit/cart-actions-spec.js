@@ -75,4 +75,15 @@ describe('cart-actions', function(){
       })
     })
   })
+
+  describe('removeFromBasket', function(){
+    it('should dispatch a new BASKET_REMOVE event with the supplied data', function(){
+      var basketItemId = '123';
+      CartActions.removeFromBasket(basketItemId);
+      handleAction.should.have.been.calledWith({
+        actionType: CartConstants.BASKET_REMOVE,
+        basketItemId: basketItemId
+      })
+    })
+  })
 })
