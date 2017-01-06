@@ -86,11 +86,4 @@ describe('Header', function(){
         testBasketSummary('4 Items');
       })
     })
-    describe('when "View Basket" is clicked', function(){
-      it('redirects browser to /basket', function(){
-        shallowRenderComponent();
-        component.find('.submit-button').simulate('click');
-        stubs.browser.redirect.should.have.been.calledWith('/basket');
-      })
-    })
 });
