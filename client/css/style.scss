@@ -58,6 +58,15 @@ hr {
     letter-spacing:1px;
 }
 
+a.submit-button,
+a.submit-button:visited {
+  color:$off-white!important;
+}
+
+a.submit-button:hover {
+  color:$text-color!important;
+}
+
 .submit-button span.glyphicon {
   margin-right:6px;
 }

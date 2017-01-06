@@ -37,10 +37,10 @@ module.exports = React.createClass({
                   <span className="title">Basket Total:</span>
               </div>
               <div className="basket-row">
-                  <button className="btn btn-default submit-button">
+                  <a href="/checkout" className="btn btn-default submit-button">
                       <span className="glyphicon glyphicon-lock"></span>
                       Proceed to Checkout
-                  </button>
+                  </a>
               </div>
             </div>);
   }

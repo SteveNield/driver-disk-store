@@ -9,9 +9,6 @@ module.exports = React.createClass({
     var numberOfItems = this.props.basket.items.length;
     return numberOfItems+' Item'+(numberOfItems>1?'s':'');
   },
-  onViewBasket: function(){
-    browser.redirect('/basket');
-  },
   render: function(){
     return (<div className="header inner-container">
         <div className="logo">
@@ -31,10 +28,10 @@ module.exports = React.createClass({
                 <div className="image"><img src="/interface/shopping_cart.png" /></div>
                 <div className="text">{this.resolveBasketSummary()}</div>
             </div>
-            <button className="submit-button btn btn-default" onClick={this.onViewBasket}>
+            <a href="/basket" className="submit-button btn btn-default">
                 <span className="glyphicon glyphicon-lock"></span>
                 View Basket
-            </button>
+            </a>
         </div>
     </div>)
   }
