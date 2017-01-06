@@ -1,12 +1,12 @@
-var CartActions = require('./../../client/actions/cart-actions'),
-    CartConstants = require('./../../client/constants/cart'),
+var BasketActions = require('./../../client/actions/basket-actions'),
+    BasketConstants = require('./../../client/constants/basket-constants'),
     Dispatcher = require('./../../client/dispatcher'),
     chai = require('chai'),
     sinon = require('sinon');
 
-describe('cart-actions', function(){
+describe('basket-actions', function(){
   it('exists', function(){
-    CartActions.should.exist;
+    BasketActions.should.exist;
   })
 
   var sandbox, handleAction;
@@ -24,9 +24,9 @@ describe('cart-actions', function(){
   describe('receiveProduct', function(){
     it('should dispatch a new RECEIVE_DATA event with the supplied data', function(){
       var product = { id: '123' };
-      CartActions.receiveProduct(product);
+      BasketActions.receiveProduct(product);
       handleAction.should.have.been.calledWith({
-        actionType: CartConstants.RECEIVE_DATA,
+        actionType: BasketConstants.RECEIVE_DATA,
         data: product
       })
     })
@@ -35,9 +35,9 @@ describe('cart-actions', function(){
   describe('receiveBasket', function(){
     it('should dispatch a new RECEIVE_BASKET event with the supplied data', function(){
       var basket = { id: '123' };
-      CartActions.receiveBasket(basket);
+      BasketActions.receiveBasket(basket);
       handleAction.should.have.been.calledWith({
-        actionType: CartConstants.RECEIVE_BASKET,
+        actionType: BasketConstants.RECEIVE_BASKET,
         data: basket
       })
     })
@@ -46,9 +46,9 @@ describe('cart-actions', function(){
   describe('selectOption', function(){
     it('should dispatch a new SELECT_OPTION event with the supplied data', function(){
       var index = 1;
-      CartActions.selectOption(index);
+      BasketActions.selectOption(index);
       handleAction.should.have.been.calledWith({
-        actionType: CartConstants.SELECT_OPTION,
+        actionType: BasketConstants.SELECT_OPTION,
         index: index
       })
     })
@@ -57,9 +57,9 @@ describe('cart-actions', function(){
   describe('addToCart', function(){
     it('should dispatch a new CART_ADD event with the supplied data', function(){
       var sku = { id: '123' };
-      CartActions.addToCart(sku);
+      BasketActions.addToCart(sku);
       handleAction.should.have.been.calledWith({
-        actionType: CartConstants.CART_ADD,
+        actionType: BasketConstants.CART_ADD,
         sku: sku
       })
     })
@@ -68,9 +68,9 @@ describe('cart-actions', function(){
   describe('receiveOptions', function(){
     it('should dispatch a new RECEIVE_OPTIONS event with the supplied data', function(){
       var options = [];
-      CartActions.receiveOptions(options);
+      BasketActions.receiveOptions(options);
       handleAction.should.have.been.calledWith({
-        actionType: CartConstants.RECEIVE_OPTIONS,
+        actionType: BasketConstants.RECEIVE_OPTIONS,
         options: options
       })
     })
@@ -79,9 +79,9 @@ describe('cart-actions', function(){
   describe('removeFromBasket', function(){
     it('should dispatch a new BASKET_REMOVE event with the supplied data', function(){
       var basketItemId = '123';
-      CartActions.removeFromBasket(basketItemId);
+      BasketActions.removeFromBasket(basketItemId);
       handleAction.should.have.been.calledWith({
-        actionType: CartConstants.BASKET_REMOVE,
+        actionType: BasketConstants.BASKET_REMOVE,
         basketItemId: basketItemId
       })
     })

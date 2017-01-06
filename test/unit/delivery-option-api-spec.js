@@ -1,5 +1,5 @@
 var deliveryOptionApi = require('./../../client/api/delivery-option-api'),
-    CartActions = require('./../../client/actions/cart-actions'),
+    BasketActions = require('./../../client/actions/basket-actions'),
     httpClient = require('./../../lib/http-client'),
     browser = require('./../../client/browser')
     chai = require('chai'),
@@ -29,7 +29,7 @@ describe('delivery-option-api', function(){
     it('loads options from API and raises new receiveOptions action', function(){
       var options = [{id:'123'}],
           receiveOptions = sandbox
-            .stub(CartActions, 'receiveOptions');
+            .stub(BasketActions, 'receiveOptions');
 
       sandbox
         .stub(httpClient, 'get')

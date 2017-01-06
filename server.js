@@ -18,12 +18,14 @@ app.use(bodyParser());
 require('./server/routes/index')(app);
 require('./server/routes/product')(app);
 require('./server/routes/view-basket')(app);
+require('./server/routes/checkout')(app);
 
 require('./server/routes/api/makes')(app);
 require('./server/routes/api/operating-systems')(app);
 require('./server/routes/api/products')(app);
 require('./server/routes/api/basket')(app);
 require('./server/routes/api/delivery-options')(app);
+require('./server/routes/api/order')(app);
 
 var server = app.listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));

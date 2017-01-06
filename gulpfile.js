@@ -32,7 +32,8 @@ gulp.task('bundle-js', function () {
   var entryPoints = [
     'index',
     'product',
-    'view-basket'
+    'view-basket',
+    'checkout'
   ];
 
   entryPoints.map(function(entryPoint){

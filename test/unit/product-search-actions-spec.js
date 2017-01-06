@@ -1,5 +1,5 @@
 var ProductSearchActions = require('./../../client/actions/product-search-actions'),
-    ProductSearchConstants = require('./../../client/constants/product-search'),
+    ProductSearchConstants = require('./../../client/constants/product-search-constants'),
     Dispatcher = require('./../../client/dispatcher'),
     chai = require('chai'),
     sinon = require('sinon');

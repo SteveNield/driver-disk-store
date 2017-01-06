@@ -1,43 +1,43 @@
 var Dispatcher = require('./../dispatcher'),
-    Events = require('./../constants/cart');
+    BasketConstants = require('./../constants/basket-constants');
 
-var cartActions = {
+var basketActions = {
   receiveProduct: function(data){
     Dispatcher.handleAction({
-      actionType: Events.RECEIVE_DATA,
+      actionType: BasketConstants.RECEIVE_DATA,
       data: data
     })
   },
   receiveBasket: function(basket){
     Dispatcher.handleAction({
-      actionType: Events.RECEIVE_BASKET,
+      actionType: BasketConstants.RECEIVE_BASKET,
       data: basket
     })
   },
   selectOption: function(index){
     Dispatcher.handleAction({
-      actionType: Events.SELECT_OPTION,
+      actionType: BasketConstants.SELECT_OPTION,
       index: index
     })
   },
   addToCart: function(sku){
     Dispatcher.handleAction({
-      actionType: Events.CART_ADD,
+      actionType: BasketConstants.CART_ADD,
       sku: sku
     })
   },
   receiveOptions: function(options){
     Dispatcher.handleAction({
-      actionType: Events.RECEIVE_OPTIONS,
+      actionType: BasketConstants.RECEIVE_OPTIONS,
       options: options
     })
   },
   removeFromBasket: function(basketItemId){
     Dispatcher.handleAction({
-      actionType: Events.BASKET_REMOVE,
+      actionType: BasketConstants.BASKET_REMOVE,
       basketItemId: basketItemId
     })
   }
 }
 
-module.exports = cartActions;
+module.exports = basketActions;

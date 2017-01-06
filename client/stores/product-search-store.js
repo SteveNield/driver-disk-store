@@ -1,6 +1,6 @@
 var Dispatcher = require('./../dispatcher'),
     EventEmitter = require('events').EventEmitter,
-    ProductSearchConstants = require('./../constants/product-search'),
+    ProductSearchConstants = require('./../constants/product-search-constants'),
     ProductSearchApi = require('./../api/product-search-api'),
     loggr = require('./../../lib/loggr'),
     _ = require('underscore');

@@ -1,6 +1,6 @@
 var Dispatcher = require('./../dispatcher'),
     EventEmitter = require('events').EventEmitter,
-    CartConstants = require('./../constants/cart'),
+    BasketConstants = require('./../constants/basket-constants'),
     basketApi = require('./../api/basket-api'),
     cookieJar = require('./../cookie-jar'),
     uuid = require('uuid'),
@@ -59,13 +59,13 @@ Dispatcher.register(function(payload){
   var action = payload.action;
   var text;
   switch(action.actionType){
-    case CartConstants.CART_ADD:
+    case BasketConstants.CART_ADD:
       add(action.sku);
       break;
-    case CartConstants.BASKET_REMOVE:
+    case BasketConstants.BASKET_REMOVE:
       remove(action.basketItemId);
       break;
-    case CartConstants.RECEIVE_BASKET:
+    case BasketConstants.RECEIVE_BASKET:
       loadBasketData(action.data);
       break;
     default: return true;

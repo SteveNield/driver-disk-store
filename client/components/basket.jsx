@@ -1,6 +1,6 @@
 var React = require('react'),
     BasketItem = require('./basket-item.jsx'),
-    BasketActions = require('./../actions/cart-actions'),
+    BasketActions = require('./../actions/basket-actions'),
     currencyFormatter = require('./../../lib/currency-formatter');
 
 module.exports = React.createClass({

@@ -1,5 +1,5 @@
 var Dispatcher = require('./../dispatcher'),
-    ProductSearchConstants = require('./../constants/product-search');
+    ProductSearchConstants = require('./../constants/product-search-constants');
 
 var productSearchActions = {
   receiveMakes: function(makes){

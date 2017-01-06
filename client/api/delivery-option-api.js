@@ -1,5 +1,5 @@
 var httpClient = require('./../../lib/http-client'),
-    CartActions = require('./../actions/cart-actions'),
+    BasketActions = require('./../actions/basket-actions'),
     loggr = require('./../../lib/loggr'),
     config = require('./../api.conf');
 
@@ -8,7 +8,7 @@ module.exports.loadDeliveryOptions = function(){
     httpClient
       .get(config.api.host+'/api/deliveryoptions')
       .then(function(options){
-        CartActions.receiveOptions(options);
+        BasketActions.receiveOptions(options);
         resolve();
       }, reject);
   });

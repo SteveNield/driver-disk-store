@@ -1,5 +1,5 @@
 var productApi = require('./../../client/api/product-api'),
-    CartActions = require('./../../client/actions/cart-actions'),
+    BasketActions = require('./../../client/actions/basket-actions'),
     browser = require('./../../client/browser')
     chai = require('chai'),
     sinon = require('sinon');
@@ -24,7 +24,7 @@ describe('product-api', function(){
     it('raises receiveProduct action with product from global scope', function(){
       var product = { id: 23 },
           receiveProduct = sandbox
-            .stub(CartActions, 'receiveProduct');
+            .stub(BasketActions, 'receiveProduct');
 
       sandbox
         .stub(browser, 'globals')

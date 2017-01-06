@@ -1,6 +1,6 @@
 var httpClient = require('./../../lib/http-client'),
     cookieJar = require('./../cookie-jar'),
-    CartActions = require('./../actions/cart-actions'),
+    BasketActions = require('./../actions/basket-actions'),
     loggr = require('./../../lib/loggr'),
     config = require('./../api.conf');
 
@@ -30,14 +30,14 @@ function loadBasketData(){
       resolve();
     } else {
       get(basketId).then(function(basket){
-        CartActions.receiveBasket(basket);
+        BasketActions.receiveBasket(basket);
         resolve();
       }, function(err){
         if (err.status === 404){
           // Client has cookie containing basket ID which does not exist
           cookieJar.remove('basket');
           loggr.info('Removed redundant basket cookie');
-          CartActions.receiveBasket({});
+          BasketActions.receiveBasket({});
           resolve();
         } else {
           loggr.error(err);

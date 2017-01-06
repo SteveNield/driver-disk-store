@@ -1,6 +1,6 @@
 var React = require('react'),
     ProductOption = require('./product-option.jsx'),
-    CartActions = require('./../actions/cart-actions'),
+    BasketActions = require('./../actions/basket-actions'),
     productPresentation = require('./../presentation/product-presentation'),
     currencyFormatter = require('./../../lib/currency-formatter');
 
@@ -10,10 +10,10 @@ module.exports = React.createClass({
       product: this.props.product._id,
       option: this.props.selected._id
     };
-    CartActions.addToCart(sku);
+    BasketActions.addToCart(sku);
   },
   changeSelected: function(event){
-    CartActions.selectOption(event.target.value);
+    BasketActions.selectOption(event.target.value);
   },
   formatPrice: function(){
     var price = this.props.selected.price;

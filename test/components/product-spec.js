@@ -2,7 +2,7 @@ require('./../dom-mock')('<html><body></body></html>');
 
 var Product = require('./../../client/components/product.jsx'),
     ProductOption = require('./../../client/components/product-option.jsx'),
-    CartActions = require('./../../client/actions/cart-actions'),
+    BasketActions = require('./../../client/actions/basket-actions'),
     currencyFormatter = require('./../../lib/currency-formatter'),
     enzyme = require('enzyme'),
     chai = require('chai'),
@@ -55,14 +55,14 @@ describe('Product', function(){
     function stubDependencies(){
       var stubs = {
         currencyFormatter: {},
-        cartActions: {}
+        BasketActions: {}
       };
 
-      stubs.cartActions.addToCart = sandbox
-        .stub(CartActions, 'addToCart');
+      stubs.BasketActions.addToCart = sandbox
+        .stub(BasketActions, 'addToCart');
 
-      stubs.cartActions.selectOption = sandbox
-        .stub(CartActions, 'selectOption');
+      stubs.BasketActions.selectOption = sandbox
+        .stub(BasketActions, 'selectOption');
 
       stubs.currencyFormatter.format = sandbox
         .stub(currencyFormatter, 'format');
