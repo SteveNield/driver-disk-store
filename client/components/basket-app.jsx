@@ -22,7 +22,10 @@ module.exports = React.createClass({
   render: function(){
     return (<div>
               <Header basket={this.state.basket} />
-              <Basket basket={this.state.basket} />
+              <Basket
+                basket={this.state.basket}
+                allowRemove={true}
+                showCheckoutButton={true} />
             </div>);
   }
 })

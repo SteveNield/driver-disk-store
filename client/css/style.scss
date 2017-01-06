@@ -305,6 +305,7 @@ a.submit-button:hover {
 .delivery-notice img {
     height:24px;
     width:24px;
+    margin-right:12px;
 }
 
 .product-row .add-to-basket {
@@ -385,4 +386,11 @@ a.submit-button:hover {
 
 .form-container form > .form-group input {
     width:376px!important;
+}
+
+.payment-container {
+    border: 2px solid $border-grey;
+    width:100%;
+    height:300px;
+    background:$body-background-grey;
 }

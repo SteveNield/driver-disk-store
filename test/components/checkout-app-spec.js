@@ -2,6 +2,7 @@ require('./../dom-mock')('<html><body></body></html>');
 
 var CheckoutApp = require('./../../client/components/checkout-app.jsx'),
     CustomerDetailForm = require('./../../client/components/customer-detail-form.jsx'),
+    Payment = require('./../../client/components/payment.jsx'),
     Message = require('./../../client/components/message.jsx'),
     Header = require('./../../client/components/header.jsx'),
     BasketStore = require('./../../client/stores/basket-store'),
@@ -35,10 +36,7 @@ describe('CheckoutApp', function(){
           items: []
         };
 
-        order = {
-          basket: '123',
-          customer: {}
-        }
+        order = {}
 
         stubs = stubDependencies();
     })
@@ -119,6 +117,14 @@ describe('CheckoutApp', function(){
         basket.items.push({});
         shallowRenderComponent();
         expect(component.find(CustomerDetailForm).length).to.equal(1);
+      })
+    })
+    describe('when order is populated and basket is not empty', function(){
+      it('renders Payment component', function(){
+        basket.items.push({});
+        order.customer = { _id: '123' };
+        shallowRenderComponent();
+        expect(component.find(Payment).length).to.equal(1);
       })
     })
 });

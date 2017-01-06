@@ -22,6 +22,7 @@ describe('BasketItem', function(){
         sandbox,
         item,
         onRemoveItem,
+        allowRemove,
         stubs;
 
     beforeEach(function(){
@@ -34,6 +35,8 @@ describe('BasketItem', function(){
         };
 
         onRemoveItem = sandbox.stub();
+
+        allowRemove = true;
 
         stubDependencies();
     })
@@ -56,11 +59,10 @@ describe('BasketItem', function(){
     }
 
     function shallowRenderComponent(){
-      component = enzyme.shallow(<BasketItem item={item} onRemoveItem={onRemoveItem} />);
-    }
-
-    function mountComponent(){
-      component = enzyme.mount(<BasketItem item={item} onRemoveItem={onRemoveItem} />);
+      component = enzyme.shallow(<BasketItem
+        item={item}
+        onRemoveItem={onRemoveItem}
+        allowRemove={allowRemove} />);
     }
 
     it('exists', function(){
@@ -85,6 +87,13 @@ describe('BasketItem', function(){
         shallowRenderComponent();
         component.find('.remove img').simulate('click');
         expect(onRemoveItem).to.have.been.called;
+      })
+    })
+    describe('when allowRemove is false', function(){
+      it('does not render remove button', function(){
+        allowRemove = false;
+        shallowRenderComponent();
+        expect(component.find('.remove').length).to.equal(0);
       })
     })
 });

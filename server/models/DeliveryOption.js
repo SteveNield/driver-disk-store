@@ -6,7 +6,8 @@ module.exports = mongoose.model('DeliveryOption', new Schema({
   price: Number,
   image: String,
   delivered: Boolean,
-  description: String
+  description: String,
+  leadTimeInDays: Number
 }, {
   collection: 'deliveryOptions'
 }));

@@ -16,6 +16,7 @@
     "fs": "0.0.2",
     "keymirror": "^0.1.1",
     "moment": "^2.16.0",
+    "moment-business-days": "0.0.10",
     "mongoose": "^4.7.5",
     "node-jsx": "^0.13.3",
     "path": "^0.12.7",
