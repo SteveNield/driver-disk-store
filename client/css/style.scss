@@ -44,7 +44,6 @@ hr {
 /* COMPONENTS */
 .detail-panel {
     background-color: $background-grey;
-    border-radius: 6px;
     border: 1px solid $border-grey;
     padding:12px;
     overflow:hidden;
@@ -280,8 +279,9 @@ a.submit-button:hover {
 }
 
 .product-row .product-image img.product {
-    height:300px;
-    width:400px;
+  width:260px;
+  height:242px;
+  border:2px solid $border-grey;
 }
 
 .product-row .product-image img.loading {
