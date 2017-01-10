@@ -80,7 +80,7 @@ describe('DeliveryNotice', function(){
       describe('when basket has items', function(){
         it('shows correct date accounting for weekends', function(){
           addBasketItem({ leadTimeInDays: 5 });
-          stubs.locale.now.returns(new Date(6, 1, 2017));
+          stubs.locale.now.returns(new Date(2017, 0, 6));
           shallowRenderComponent();
           expect(component.find('.delivery-notice').text()).to.equal('Estimated Delivery Date: January 13th 2017')
         })

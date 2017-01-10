@@ -1,4 +1,5 @@
 var React = require('react'),
+    locale = require('./../../lib/locale'),
     moment = require('moment-business-days');
 
 module.exports = React.createClass({
@@ -16,7 +17,7 @@ module.exports = React.createClass({
 
       return (prevLeadTime > currentLeadTime) ? prev : current;
     });
-    return moment(new Date()).businessAdd(basketItemWithLongestLeadTime.deliveryOption.leadTimeInDays).format('MMMM Do YYYY');
+    return moment(locale.now()).businessAdd(basketItemWithLongestLeadTime.deliveryOption.leadTimeInDays).format('MMMM Do YYYY');
   },
   render: function(){
     return (<div className="basket-row">
